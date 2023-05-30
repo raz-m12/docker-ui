@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  constructor(private loginService: LoginService) { }
+
+  public login() {
+    return this.loginService.login().subscribe(
+      response => {
+        alert("Successful http call...");
+      }
+      // TODO RV handle error message
+    );
+  }
 }
