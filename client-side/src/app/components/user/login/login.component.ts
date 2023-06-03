@@ -1,19 +1,40 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {LoginService} from "./login.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {User} from "../user";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  form: FormGroup;
+  isRegistering: boolean = false;
+  constructor(private loginService: LoginService,
+              private formBuilder: FormBuilder) {
 
-  constructor(private loginService: LoginService) { }
+    // create form
+    this.form = this.formBuilder.group({
+      username: ["", Validators.required],
+      password: ["", Validators.required]
+    });
+  }
 
-  public login() {
-    return this.loginService.login().subscribe(
+  ngOnInit(): void {
+  }
+
+  public attemptLogin() {
+    const user = new User(
+      this.form.controls['username'].value,
+      this.form.controls['password'].value
+    );
+
+    // Attempt login
+    return this.loginService.login(user).subscribe(
       response => {
-        alert("Successful http call...");
+        alert("Successful http call... + " + user.username);
       }
       // TODO RV handle error message
     );

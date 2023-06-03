@@ -1,3 +1,10 @@
-<p>login works!</p>
-
-<button (click)="login()">My first POST call</button>
+<div class="login-page">
+  <div class="form">
+    <form (submit)="attemptLogin()" [formGroup]="form">
+      <input type="text" placeholder="username" formControlName="username"/>
+      <input type="password" placeholder="password" formControlName="password"/>
+      <button>Login</button>
+      <p class="message">Not registered? <a [routerLink]="['/register']">Create an account</a></p>
+    </form>
+  </div>
+</div>
