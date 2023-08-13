@@ -1,0 +1,8 @@
+theme: jekyll-theme-architect
+title: Docker UI
+description: "Project documentation for Docker UI"
+github:
+  private: false
+  license:
+    name: MIT
+  repository_url: "https://github.com/raz-m12/docker-ui"
