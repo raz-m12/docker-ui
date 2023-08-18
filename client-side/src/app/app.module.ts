@@ -6,6 +6,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {BaseModule} from "./base/core.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {MatButtonModule} from "@angular/material/button";
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule, // TODO RV perhaps import in another module
-    MatButtonModule
+    MatButtonModule,
+    BaseModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
