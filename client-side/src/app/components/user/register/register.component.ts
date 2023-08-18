@@ -1,7 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {User} from "../user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../login/login.service";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-register',
@@ -11,17 +12,23 @@ import {LoginService} from "../login/login.service";
 })
 export class RegisterComponent {
   form: FormGroup;
-  constructor(private loginService: LoginService,
-              private formBuilder: FormBuilder) {
+  constructor(private userService: UserService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private alertService: ToastrService) {
 
     // create form
     this.form = this.formBuilder.group({
       username: ["", Validators.required],
       password: ["", Validators.required],
-      email: ["", Validators.required]
+      email: ["", [Validators.required, Validators.email]]
     });
   }
   public register() {
-    alert("Test");
+    this.userService.register(this.form.value).subscribe(
+      (data) => {
+        this.alertService.success("Registration successful");
+        this.router.navigate(["/login"]);
+    });
   }
 }

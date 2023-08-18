@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../../../environments/envinronment";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
-import {User} from "../user";
+import {User} from "../../base/models/user.interface";
+import {environment} from "../../../../environments/envinronment";
+
 
 @Injectable()
-export class LoginService {
+export class UserService {
 
   constructor(private http: HttpClient) { }
 
@@ -16,5 +17,9 @@ export class LoginService {
     }).pipe(map(() => {
       console.log("works");
     }));
+  }
+
+  register(user: User) {
+    return this.http.post<User>(environment.serverEndpoint + "user/register", user);
   }
 }

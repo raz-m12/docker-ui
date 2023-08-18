@@ -1,9 +1,12 @@
+<!-- TODO add responsive design -->
 <div class="login-page">
   <div class="form">
-    <form (submit)="attemptLogin()" [formGroup]="form">
+    <form (submit)="login()" [formGroup]="form">
       <input type="text" placeholder="username" formControlName="username"/>
       <input type="password" placeholder="password" formControlName="password"/>
-      <button>Login</button>
+      <div class="form-group">
+        <button type="submit" [disabled]="form.invalid" class="btn btn-success">Login</button>
+      </div>
       <p class="message">Not registered? <a [routerLink]="['/register']">Create an account</a></p>
     </form>
   </div>

@@ -4,7 +4,9 @@
       <input type="text" placeholder="username" formControlName="username"/>
       <input type="password" placeholder="password" formControlName="password"/>
       <input type="text" placeholder="email address" formControlName="email"/>
-      <button>Register</button>
+      <div class="form-group">
+        <button type="submit" [disabled]="form.invalid" class="btn btn-success">Register</button>
+      </div>
       <p class="message">Already registered? <a [routerLink]="['/login']">Sign In</a></p>
     </form>
   </div>

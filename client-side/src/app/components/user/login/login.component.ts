@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {LoginService} from "./login.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../user";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,7 @@ import {User} from "../user";
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isRegistering: boolean = false;
-  constructor(private loginService: LoginService,
+  constructor(private userService: UserService,
               private formBuilder: FormBuilder) {
 
     // create form
@@ -25,16 +24,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public attemptLogin() {
-    const user = new User(
-      this.form.controls['username'].value,
-      this.form.controls['password'].value
-    );
-
+  public login() {
     // Attempt login
-    return this.loginService.login(user).subscribe(
+    return this.userService.login(this.form.value).subscribe(
       response => {
-        alert("Successful http call... + " + user.username);
+        alert("Successful http call... + " + this.form.value.username);
       }
       // TODO RV handle error message
     );
