@@ -17,3 +17,9 @@ lanciarlo tramite il codice sorgente sulla macchina locale (gestito via le varia
 
 Lo stack MEAN
 Altre librarie di Node come per esempio dotenv che permette di configurare Docker tramite le variabili dell'ambiente.
+
+# Environment
+Languages and frameworks -> nodeJS -> Node assistance for NodeJS
+
+# Diagrams
+DrawIO, Figma

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
+/** @title Responsive sidenav */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
-}
 
+  constructor() {
+  }
+
+}
