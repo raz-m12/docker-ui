@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { DashboardComponent } from "./dashboard.component";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MatSidenavModule} from "@angular/material/sidenav";
@@ -21,7 +21,8 @@ import {ToolbarComponent} from "../toolbar/toolbar.component";
     MatListModule,
     RouterLink,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgOptimizedImage
   ],
   exports: [DashboardComponent, ToolbarComponent],
 

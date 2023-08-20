@@ -7,6 +7,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {BaseModule} from "./base/base.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {AngularSvgIconModule} from "angular-svg-icon";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {BaseModule} from "./base/base.module";
     HttpClientModule,
     BrowserAnimationsModule, // TODO RV perhaps import in another module
     MatButtonModule,
-    BaseModule.forRoot()
+    BaseModule.forRoot(),
+    NgbModule,
+    AngularSvgIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

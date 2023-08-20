@@ -4,6 +4,10 @@ import {DashboardModule} from "./dashboard/dashboard.module";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTableModule} from "@angular/material/table";
+import {MatInputModule} from "@angular/material/input";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   imports: [
@@ -17,7 +21,16 @@ import {MatToolbarModule} from "@angular/material/toolbar";
   ],
   declarations: [
   ],
-  exports: [ToastrModule, DashboardModule]
+  exports: [
+    ToastrModule,
+    DashboardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule
+  ]
 })
 export class BaseModule {
   static forRoot(): ModuleWithProviders<BaseModule> {

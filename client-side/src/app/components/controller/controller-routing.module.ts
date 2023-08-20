@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import {ControllerDetailsComponent} from "./controller-details/controller-details.component";
 import {DashboardComponent} from "../../base/dashboard/dashboard.component";
 import {BaseModule} from "../../base/base.module";
+import {ControllerComponent} from "./controller.component";
 
 const controllerRoutes: Routes = [
   {
@@ -11,7 +11,7 @@ const controllerRoutes: Routes = [
     children: [
       {
         path: "",
-        component: ControllerDetailsComponent
+        component: ControllerComponent
       }
     ]
   }

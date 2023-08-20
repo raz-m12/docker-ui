@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControllerDetailsComponent } from './controller-details/controller-details.component';
 import { BaseModule } from "../../base/base.module";
 import { ControllerRoutingModule } from "./controller-routing.module";
+import { LoggerComponent } from './logger/logger.component';
+import { ControllerComponent } from './controller.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
-    ControllerDetailsComponent
+    LoggerComponent,
+    ControllerComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
