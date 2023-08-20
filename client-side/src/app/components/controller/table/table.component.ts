@@ -62,7 +62,7 @@ export class TableComponent implements AfterViewInit {
 
     if (originalIndex >= 0) {
       // Update the sorting indices
-      this.dataStream.data.forEach((dataItem, index) => {
+      this.dataStream.data.forEach((dataItem) => {
         if (dataItem.id !== item.id && dataItem.id > originalIndex) {
           dataItem.id--;
         }
