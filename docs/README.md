@@ -92,7 +92,12 @@
         <tr>
             <td>3</td>
             <td>Login/Signup Page</td>
-            <td>Offer a clear login and registration form with fields for email and password.<br />  Allow users to sign up using social media accounts for convenience.<br />  Provide password recovery options and ensure a secure login process.<br /></td>
+            <td>
+                3.1. Offer a clear login form with fields for id and password.<br />  
+                3.2. Offer a clear registration page with fields for id, password and email.<br />
+                3.3. Allow users to sign up using social media accounts for convenience.<br />  
+                3.4. Provide password recovery options and ensure a secure login process.<br />
+            </td>
         </tr>
         <tr>
             <td>4</td>
