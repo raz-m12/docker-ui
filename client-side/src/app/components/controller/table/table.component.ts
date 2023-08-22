@@ -37,10 +37,15 @@ export class TableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataStream: MatTableDataSource<ContainerElement>;
+  selectedRowIndex = -1;
 
   constructor() {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
+  }
+
+  highlight(row: ContainerElement){
+    this.selectedRowIndex = row.id;
   }
 
   ngAfterViewInit() {
