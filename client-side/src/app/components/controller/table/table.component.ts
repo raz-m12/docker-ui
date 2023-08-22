@@ -6,21 +6,21 @@ import {MatTableDataSource} from "@angular/material/table";
 export interface ContainerElement {
   name: string;
   id: number;
-  weight: number;
-  symbol: string;
+  status: boolean;
+  remove: string;
 }
 
 const ELEMENT_DATA: ContainerElement[] = [
-  {id: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {id: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {id: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {id: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {id: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {id: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {id: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {id: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {id: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {id: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  {id: 1, name: 'Hydrogen', status: false, remove: 'H'},
+  {id: 2, name: 'Helium', status: false, remove: 'He'},
+  {id: 3, name: 'Lithium', status: false, remove: 'Li'},
+  {id: 4, name: 'Beryllium', status: true, remove: 'Be'},
+  {id: 5, name: 'Boron', status: true, remove: 'B'},
+  {id: 6, name: 'Carbon', status: true, remove: 'C'},
+  {id: 7, name: 'Nitrogen', status: false, remove: 'N'},
+  {id: 8, name: 'Oxygen', status: false, remove: 'O'},
+  {id: 9, name: 'Fluorine', status: true, remove: 'F'},
+  {id: 10, name: 'Neon', status: true, remove: 'Ne'},
 ];
 @Component({
   selector: 'app-table',
@@ -28,7 +28,7 @@ const ELEMENT_DATA: ContainerElement[] = [
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'name', 'status', 'remove'];
   dataToDisplay: ContainerElement[] = ELEMENT_DATA;
 
   // @ts-ignore
