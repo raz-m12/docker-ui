@@ -18,7 +18,7 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule, // TODO RV perhaps import in another module
+    BrowserAnimationsModule,
     MatButtonModule,
     BaseModule.forRoot(),
     NgbModule,

@@ -2,25 +2,21 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-
-export interface ContainerElement {
-  name: string;
-  id: number;
-  status: boolean;
-  remove: string;
-}
+import {MatDialog} from "@angular/material/dialog";
+import {TableDialogComponent} from "../table-dialog/table-dialog.component";
+import {ContainerElement} from "../../../base/models/container.interface"
 
 const ELEMENT_DATA: ContainerElement[] = [
-  {id: 1, name: 'Hydrogen', status: false, remove: 'H'},
-  {id: 2, name: 'Helium', status: false, remove: 'He'},
-  {id: 3, name: 'Lithium', status: false, remove: 'Li'},
-  {id: 4, name: 'Beryllium', status: true, remove: 'Be'},
-  {id: 5, name: 'Boron', status: true, remove: 'B'},
-  {id: 6, name: 'Carbon', status: true, remove: 'C'},
-  {id: 7, name: 'Nitrogen', status: false, remove: 'N'},
-  {id: 8, name: 'Oxygen', status: false, remove: 'O'},
-  {id: 9, name: 'Fluorine', status: true, remove: 'F'},
-  {id: 10, name: 'Neon', status: true, remove: 'Ne'},
+  {id: 1, name: 'Hydrogen', status: false},
+  {id: 2, name: 'Helium', status: false},
+  {id: 3, name: 'Lithium', status: false},
+  {id: 4, name: 'Beryllium', status: true},
+  {id: 5, name: 'Boron', status: true},
+  {id: 6, name: 'Carbon', status: true},
+  {id: 7, name: 'Nitrogen', status: false},
+  {id: 8, name: 'Oxygen', status: false},
+  {id: 9, name: 'Fluorine', status: true},
+  {id: 10, name: 'Neon', status: true},
 ];
 @Component({
   selector: 'app-table',
@@ -28,7 +24,7 @@ const ELEMENT_DATA: ContainerElement[] = [
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'status', 'remove'];
+  displayedColumns: string[] = ['id', 'name', 'status', 'action'];
   dataToDisplay: ContainerElement[] = ELEMENT_DATA;
 
   // @ts-ignore
@@ -39,7 +35,7 @@ export class TableComponent implements AfterViewInit {
   dataStream: MatTableDataSource<ContainerElement>;
   selectedRowIndex = -1;
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
@@ -54,13 +50,44 @@ export class TableComponent implements AfterViewInit {
   }
 
 
-  addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [...this.dataStream.data, ELEMENT_DATA[randomElementIndex]];
+  openDialog(action: string, obj: ContainerElement | null) {
+    if(obj != null)
+      obj.action = action;
+    else { // @ts-ignore
+        obj = {}; obj.action = action;
+      }
+
+    const dialogRef = this.dialog.open(TableDialogComponent, {
+      width: '400px',
+      data: obj ? obj: {},
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'Add'){
+        this.add(result.data);
+      }else if(result.event == 'Update'){
+        this.update(result.data);
+      }else if(result.event == 'Delete'){
+        this.delete(result.data);
+      }
+    });
+  }
+
+  update(item: ContainerElement){
+    this.dataStream.data.forEach((value,key)=>{
+      if(value.id == item.id){
+        value.name = item.name;
+      }
+    });
+  }
+
+  add(item: ContainerElement) {
+    this.dataToDisplay = [...this.dataStream.data, item];
     this.dataStream.data = this.dataToDisplay;
   }
 
-  removeData(item: ContainerElement) {
+  delete(item: ContainerElement) {
     const originalIndex = this.dataStream.data.findIndex(
       (dataItem) => dataItem.id === item.id
     );
@@ -73,7 +100,7 @@ export class TableComponent implements AfterViewInit {
         }
       });
 
-      // Remove item from the original data array
+      // Delete item from the original data array
       this.dataStream.data.splice(originalIndex, 1);
 
       // Update the data source to reflect the change
