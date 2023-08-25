@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
-import {User} from "../../base/models/user.interface";
+import {User} from "../models/user.interface";
 import {environment} from "../../../../environments/envinronment";
 
 
@@ -10,6 +10,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  // TODO manage users
   public login(user: User) {
     return this.http.post(environment.serverEndpoint + "user/authenticate", {
       username: "bob",

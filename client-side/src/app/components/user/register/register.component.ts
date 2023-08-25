@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {UserService} from "../user.service";
+import {UserService} from "../../../base/services/services";
 
 @Component({
   selector: 'app-register',

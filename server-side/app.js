@@ -20,7 +20,7 @@ function connectToDB() {
 
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
   }).then(() => {
     console.log("Successful connection to MongoDB");
   }).catch((error) => {
@@ -32,10 +32,11 @@ function connectToDB() {
 connectToDB();
 
 // register routes
-let indexRouter = require('./routes/index');
 let userRouter = require('./routes/user');
+let containerRouter = require('./routes/container');
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/container', containerRouter);
 
 module.exports = app;

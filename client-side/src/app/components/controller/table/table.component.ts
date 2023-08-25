@@ -1,47 +1,58 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
-import {ContainerElement} from "../../../base/models/container.interface"
+import {ContainerTableElement, Project} from "../../../base/models/container.interface"
+import { ContainerService } from "../../../base/services/services";
 
-const ELEMENT_DATA: ContainerElement[] = [
-  {id: 1, name: 'Hydrogen', status: false},
-  {id: 2, name: 'Helium', status: false},
-  {id: 3, name: 'Lithium', status: false},
-  {id: 4, name: 'Beryllium', status: true},
-  {id: 5, name: 'Boron', status: true},
-  {id: 6, name: 'Carbon', status: true},
-  {id: 7, name: 'Nitrogen', status: false},
-  {id: 8, name: 'Oxygen', status: false},
-  {id: 9, name: 'Fluorine', status: true},
-  {id: 10, name: 'Neon', status: true},
+const ELEMENT_DATA: ContainerTableElement[] = [
+  {id: "1", name: 'Hydrogen', status: false, yamlPath: ""},
+  {id: "2", name: 'Helium', status: false, yamlPath: ""},
+  {id: "3", name: 'Lithium', status: false, yamlPath: ""},
+  {id: "4", name: 'Beryllium', status: true, yamlPath: ""},
+  {id: "5", name: 'Boron', status: true, yamlPath: ""},
+  {id: "6", name: 'Carbon', status: true, yamlPath: ""},
+  {id: "7", name: 'Nitrogen', status: false, yamlPath: ""},
+  {id: "8", name: 'Oxygen', status: false, yamlPath: ""},
+  {id: "9", name: 'Fluorine', status: true, yamlPath: ""},
+  {id: "10", name: 'Neon', status: true, yamlPath: ""},
 ];
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'status', 'action'];
-  dataToDisplay: ContainerElement[] = ELEMENT_DATA;
+export class TableComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['name', 'status', 'action'];
+  dataToDisplay: ContainerTableElement[] = ELEMENT_DATA;
 
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
 
-  dataStream: MatTableDataSource<ContainerElement>;
-  selectedRowIndex = -1;
+  dataStream: MatTableDataSource<ContainerTableElement>;
+  selectedRowIndex = "";
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, public CS: ContainerService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
 
-  highlight(row: ContainerElement){
-    this.selectedRowIndex = row.id;
+  ngOnInit(): void {
+    this.CS.loadProjects().subscribe((projects: Project[]) => {
+      const data: ContainerTableElement[] = projects.map((p): ContainerTableElement => {
+        return {
+          name: p.id,
+          yamlPath: p.yamlPath,
+          status: this.CS.isActive(p.id),
+          id: p.id
+        }
+      });
+      this.dataStream.data = [...data];
+    });
   }
 
   ngAfterViewInit() {
@@ -49,8 +60,12 @@ export class TableComponent implements AfterViewInit {
     this.dataStream.sort = this.sort;
   }
 
+  highlight(row: ContainerTableElement){
+    this.selectedRowIndex = row.id;
+  }
 
-  openDialog(action: string, obj: ContainerElement | null) {
+
+  openDialog(action: string, obj: ContainerTableElement | null) {
     if(obj != null)
       obj.action = action;
     else { // @ts-ignore
@@ -58,7 +73,7 @@ export class TableComponent implements AfterViewInit {
       }
 
     const dialogRef = this.dialog.open(TableDialogComponent, {
-      width: '400px',
+      width: '600px',
       data: obj ? obj: {},
       disableClose: true
     });
@@ -74,32 +89,25 @@ export class TableComponent implements AfterViewInit {
     });
   }
 
-  update(item: ContainerElement){
-    this.dataStream.data.forEach((value,key)=>{
+  update(item: ContainerTableElement){
+    this.dataStream.data.forEach((value)=>{
       if(value.id == item.id){
         value.name = item.name;
       }
     });
   }
 
-  add(item: ContainerElement) {
+  add(item: ContainerTableElement) {
     this.dataToDisplay = [...this.dataStream.data, item];
     this.dataStream.data = this.dataToDisplay;
   }
 
-  delete(item: ContainerElement) {
+  delete(item: ContainerTableElement) {
     const originalIndex = this.dataStream.data.findIndex(
       (dataItem) => dataItem.id === item.id
     );
 
     if (originalIndex >= 0) {
-      // Update the sorting indices
-      this.dataStream.data.forEach((dataItem) => {
-        if (dataItem.id !== item.id && dataItem.id > originalIndex) {
-          dataItem.id--;
-        }
-      });
-
       // Delete item from the original data array
       this.dataStream.data.splice(originalIndex, 1);
 

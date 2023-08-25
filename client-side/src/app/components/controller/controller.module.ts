@@ -7,8 +7,8 @@ import { ControllerComponent } from './controller.component';
 import { TableComponent } from './table/table.component';
 import { ControlCenterComponent } from './control-center/control-center.component';
 import { TableDialogComponent } from './table-dialog/table-dialog.component';
-import {FormsModule} from "@angular/forms";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ContainerService} from "../../base/services/services";
 
 @NgModule({
   declarations: [
@@ -20,9 +20,11 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ControllerRoutingModule,
     BaseModule.forRoot(),
     FormsModule
-  ]
+  ],
+  providers: [ ContainerService ]
 })
 export class ControllerModule { }

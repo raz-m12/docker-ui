@@ -5,7 +5,8 @@ import {UserRoutingModule} from "./user-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import { RegisterComponent } from './register/register.component';
 import {BaseModule} from "../../base/base.module";
-import {UserService} from "./user.service";
+import {UserService} from "../../base/services/services";
+
 
 
 @NgModule({

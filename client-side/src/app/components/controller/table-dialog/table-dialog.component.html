@@ -1,13 +1,20 @@
 <h1 mat-dialog-title>Container Action :: <strong>{{action}}</strong></h1>
 <div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input (input)="disableActionBtn()" placeholder="{{action}} Name" matInput [(ngModel)]="model.name">
-  </mat-form-field>
+  <ng-container *ngIf="action != 'Delete'; else elseTemplate" [formGroup]="form">
+    <mat-form-field>
+      <input (input)="disableNameTextbox()" placeholder="{{action}} Name" matInput
+             formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="app-full-width">
+      <mat-label>Docker compose file</mat-label>
+      <textarea [rows]="20" [cols]="80" matInput placeholder="YAML format" formControlName="yaml"></textarea>
+    </mat-form-field>
+  </ng-container>
   <ng-template #elseTemplate>
     Sure to delete <b>{{model.name}}</b>?
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button [disabled]="isModelNameEmpty" (click)="doAction()">{{action}}</button>
+  <button mat-raised-button [disabled]="action !== 'Delete' ? form.invalid: false" (click)="doAction()">{{action}}</button>
   <button mat-raised-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
 </div>
