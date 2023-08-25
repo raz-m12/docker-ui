@@ -1,5 +1,4 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
-import { ToastrModule, ToastrService } from "ngx-toastr";
 import {DashboardModule} from "./dashboard/dashboard.module";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
@@ -10,21 +9,23 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
+import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   imports: [
-    ToastrModule.forRoot({
-      positionClass: 'toast-top-left',
-    }),
     DashboardModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgForOf,
+    NgbToast,
+    NgIf,
+    NgTemplateOutlet
   ],
   declarations: [
   ],
   exports: [
-    ToastrModule,
     DashboardModule,
     MatIconModule,
     MatButtonModule,
@@ -40,7 +41,7 @@ export class BaseModule {
   static forRoot(): ModuleWithProviders<BaseModule> {
     return {
       ngModule: BaseModule,
-      providers: [ToastrService]
+      providers: []
     };
   }
 }

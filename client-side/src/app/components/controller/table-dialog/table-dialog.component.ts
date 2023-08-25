@@ -1,7 +1,8 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, OnDestroy, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContainerTableElement} from "../../../base/models/container.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-table-dialog',
@@ -16,7 +17,7 @@ export class TableDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<TableDialogComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ContainerTableElement,
-
+    public toast: ToastrService,
     public formBuilder: FormBuilder) {
 
     this.model = {...data};
@@ -32,6 +33,7 @@ export class TableDialogComponent {
   }
 
   doAction(){
+    this.toast.success('The container was updated successfully.', "Success");
     this.dialogRef.close({event:this.action,data:this.form.value});
   }
 

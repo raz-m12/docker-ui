@@ -9,6 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {BaseModule} from "./base/base.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {AngularSvgIconModule} from "angular-svg-icon";
+import {ToastrModule, ToastrService} from "ngx-toastr";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -20,11 +22,17 @@ import {AngularSvgIconModule} from "angular-svg-icon";
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    CommonModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     BaseModule.forRoot(),
     NgbModule,
     AngularSvgIconModule
   ],
-  providers: [],
+  providers: [ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,18 +6,19 @@ import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
 import {ContainerTableElement, Project} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
+import {ToastrService} from "ngx-toastr";
 
 const ELEMENT_DATA: ContainerTableElement[] = [
-  {id: "1", name: 'Hydrogen', status: false, yamlPath: ""},
-  {id: "2", name: 'Helium', status: false, yamlPath: ""},
-  {id: "3", name: 'Lithium', status: false, yamlPath: ""},
-  {id: "4", name: 'Beryllium', status: true, yamlPath: ""},
-  {id: "5", name: 'Boron', status: true, yamlPath: ""},
-  {id: "6", name: 'Carbon', status: true, yamlPath: ""},
-  {id: "7", name: 'Nitrogen', status: false, yamlPath: ""},
-  {id: "8", name: 'Oxygen', status: false, yamlPath: ""},
-  {id: "9", name: 'Fluorine', status: true, yamlPath: ""},
-  {id: "10", name: 'Neon', status: true, yamlPath: ""},
+  {id: "1", name: 'Hydrogen', status: false, path: ""},
+  {id: "2", name: 'Helium', status: false, path: ""},
+  {id: "3", name: 'Lithium', status: false, path: ""},
+  {id: "4", name: 'Beryllium', status: true, path: ""},
+  {id: "5", name: 'Boron', status: true, path: ""},
+  {id: "6", name: 'Carbon', status: true, path: ""},
+  {id: "7", name: 'Nitrogen', status: false, path: ""},
+  {id: "8", name: 'Oxygen', status: false, path: ""},
+  {id: "9", name: 'Fluorine', status: true, path: ""},
+  {id: "10", name: 'Neon', status: true, path: ""},
 ];
 @Component({
   selector: 'app-table',
@@ -36,7 +37,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   dataStream: MatTableDataSource<ContainerTableElement>;
   selectedRowIndex = "";
 
-  constructor(public dialog: MatDialog, public CS: ContainerService) {
+  constructor(public dialog: MatDialog, public CS: ContainerService, public toast: ToastrService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
@@ -46,7 +47,8 @@ export class TableComponent implements OnInit, AfterViewInit {
       const data: ContainerTableElement[] = projects.map((p): ContainerTableElement => {
         return {
           name: p.id,
-          yamlPath: p.yamlPath,
+          path: p.path,
+          yaml: p.yaml,
           status: this.CS.isActive(p.id),
           id: p.id
         }

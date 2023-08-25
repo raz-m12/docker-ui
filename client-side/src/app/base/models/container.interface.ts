@@ -3,7 +3,7 @@ export interface ContainerTableElement {
   name: string;
   status: boolean;
   action?: string;
-  yamlPath: string;
+  path: string;
   yaml?: string;
 }
 
@@ -18,7 +18,7 @@ interface Labels {
 
 export interface Project {
   id: string;
-  yamlPath: string;
+  path: string;
   yaml: string;
 }
 

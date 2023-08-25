@@ -35,7 +35,6 @@ connectToDB();
 let userRouter = require('./routes/user');
 let containerRouter = require('./routes/container');
 
-app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/container', containerRouter);
 
