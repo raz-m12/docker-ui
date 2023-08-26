@@ -1,7 +1,7 @@
-import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContainerTableElement} from "../../../base/models/container.interface";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -24,7 +24,7 @@ export class TableDialogComponent {
     this.action = data.action;
     this.form = this.formBuilder.group({
       name: [data.name, Validators.required],
-      yaml: [data.yaml, Validators.required]
+      yaml: new FormControl({ value: data.yaml, disabled: true}, [Validators.required])
     });
 
     // disable the name field in case of updating
@@ -33,7 +33,7 @@ export class TableDialogComponent {
   }
 
   doAction(){
-    this.toast.success('The container was updated successfully.', "Success");
+    this.toast.success("Saved successfully");
     this.dialogRef.close({event:this.action,data:this.form.value});
   }
 

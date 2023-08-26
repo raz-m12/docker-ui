@@ -29,10 +29,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'status', 'action'];
   dataToDisplay: ContainerTableElement[] = ELEMENT_DATA;
 
-  // @ts-ignore
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ts-ignore
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   dataStream: MatTableDataSource<ContainerTableElement>;
   selectedRowIndex = "";
@@ -63,7 +61,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   highlight(row: ContainerTableElement){
-    this.selectedRowIndex = row.id;
+    if(row.id === this.selectedRowIndex)
+      this.selectedRowIndex = "";
+    else
+      this.selectedRowIndex = row.id;
+
+    this.CS.setActiveContainer(this.dataStream.data.find(c => c.id === this.selectedRowIndex));
   }
 
 

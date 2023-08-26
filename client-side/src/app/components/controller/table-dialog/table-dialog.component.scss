@@ -16,3 +16,16 @@ mat-form-field {
 .app-full-width {
   width: 100%;
 }
+
+input:disabled, textarea:disabled {
+  color: black;
+}
+
+select:disabled {
+  color: black;
+}
+
+// Add in style.scss as we are overriding css of global mat-select class which is part of other module.
+.mat-select-disabled .mat-select-value {
+  color: black;
+}

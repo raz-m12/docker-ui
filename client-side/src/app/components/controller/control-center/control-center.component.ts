@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {ContainerTableElement} from "../../../base/models/container.interface";
+import {ContainerService} from "../../../base/services/container.service";
 
 @Component({
   selector: 'app-control-center',
@@ -6,6 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./control-center.component.scss']
 })
 export class ControlCenterComponent {
+  container: ContainerTableElement | undefined;
+
+  constructor(public CS: ContainerService) {
+    this.CS.activeContainer().subscribe(c => {
+      this.container = c
+    });
+  }
 
   build() {
 
