@@ -1,0 +1,13 @@
+version: "3.8" # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  docker_compose:
+    build:
+      context: .
+    # image: "user/test:v1.0"
+    container_name: docker_compose
+    hostname: docker_compose
+    working_dir: /opt/docker-projects/
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Public function used to load all projects
- * @returns {*[]} projects as a dictionary
+ * Public function used to load all docker-projects
+ * @returns {*[]} docker-projects as a dictionary
  */
 exports.loadProjects = function loadProjects() {
     const projects = findComposeFiles(environment.projectsPath, true);

@@ -5,11 +5,11 @@ const {filterProjects} = require("../utilities/utilities");
 
 const app = express();
 
-/** Load all projects during startup. */
+/** Load all docker-projects during startup. */
 app.locals.projects = loadProjects();
 
 /**
- * Retrieves all projects stored on the file system.
+ * Retrieves all docker-projects stored on the file system.
  */
 exports.getProjects = function (req, res) {
   app.locals.projects = loadProjects();
