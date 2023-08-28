@@ -34,8 +34,15 @@ connectToDB();
 // register routes
 let userRouter = require('./routes/user');
 let containerRouter = require('./routes/container');
-
 app.use('/user', userRouter);
 app.use('/container', containerRouter);
+
+
+// Set up the port to listen to
+const endpoint = environment.serverEndpoint
+
+app.listen(endpoint, () => {
+  console.log(`Running  on ${endpoint}`);
+});
 
 module.exports = app;

@@ -1,6 +1,6 @@
 import {map, Observable, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../../environments/envinronment";
+import {environment} from "../../../../environments/environment";
 import {Container, ContainerTableElement, Project} from "../models/container.interface";
 import {Injectable} from "@angular/core";
 

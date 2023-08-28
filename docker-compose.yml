@@ -2,12 +2,28 @@ version: "3.8" # specify docker-compose version
 
 # Define the services/containers to be run
 services:
-  docker_compose:
+  dockerui-server:
     build:
-      context: .
+      context: ./server-side
+      dockerfile: Dockerfile
     # image: "user/test:v1.0"
     container_name: docker_compose
     hostname: docker_compose
     working_dir: /opt/docker-projects/
+    ports:
+      - "3000:3000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  angular: # name of the first service
+    build: # specify the directory of the Dockerfile
+      context: ./client-side
+      dockerfile: Dockerfile
+    container_name: dockerUI-client
+    volumes:
+      - ./client-side:/app/client-side
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "4200:4200" # specify port forewarding
+    links:
+      - dockerui-server
