@@ -37,6 +37,14 @@
             "scripts": []
           },
           "configurations": {
+            "docker": {
+              "fileReplacements": [
+                {
+                  "replace": "environments/environment.ts",
+                  "with": "environments/environment.docker.ts"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -65,7 +73,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "0.0.0.0"
+          },
           "configurations": {
+            "docker": {
+              "browserTarget": "client-side:build:docker"
+            },
             "production": {
               "browserTarget": "client-side:build:production"
             },
