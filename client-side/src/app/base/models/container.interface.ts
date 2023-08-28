@@ -1,4 +1,4 @@
-export interface ContainerTableElement {
+export interface ProjectTableElement {
   id: string;
   name: string;
   status: boolean;
@@ -10,6 +10,15 @@ export interface ContainerTableElement {
 export interface Container {
   Labels: Labels;
   State: string;
+  data: ContainerData;
+  out: string;
+}
+
+interface ContainerData {
+  services: Service[];
+}
+interface Service {
+  state: string;
 }
 
 interface Labels {

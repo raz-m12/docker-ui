@@ -4,11 +4,11 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
-import {ContainerTableElement, Project} from "../../../base/models/container.interface"
+import {ProjectTableElement, Project} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
 import {ToastrService} from "ngx-toastr";
 
-const ELEMENT_DATA: ContainerTableElement[] = [
+const ELEMENT_DATA: ProjectTableElement[] = [
   {id: "1", name: 'Hydrogen', status: false, path: ""},
   {id: "2", name: 'Helium', status: false, path: ""},
   {id: "3", name: 'Lithium', status: false, path: ""},
@@ -27,12 +27,12 @@ const ELEMENT_DATA: ContainerTableElement[] = [
 })
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'status', 'action'];
-  dataToDisplay: ContainerTableElement[] = ELEMENT_DATA;
+  dataToDisplay: ProjectTableElement[] = ELEMENT_DATA;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  dataStream: MatTableDataSource<ContainerTableElement>;
+  dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
 
   constructor(public dialog: MatDialog, public CS: ContainerService, public toast: ToastrService) {
@@ -42,7 +42,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.CS.loadProjects().subscribe((projects: Project[]) => {
-      const data: ContainerTableElement[] = projects.map((p): ContainerTableElement => {
+      const data: ProjectTableElement[] = projects.map((p): ProjectTableElement => {
         return {
           name: p.id,
           path: p.path,
@@ -60,17 +60,17 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataStream.sort = this.sort;
   }
 
-  highlight(row: ContainerTableElement){
+  highlight(row: ProjectTableElement){
     if(row.id === this.selectedRowIndex)
       this.selectedRowIndex = "";
     else
       this.selectedRowIndex = row.id;
 
-    this.CS.setActiveContainer(this.dataStream.data.find(c => c.id === this.selectedRowIndex));
+    this.CS.setActiveContainer(this.dataStream.data.find(c => c.id === this.selectedRowIndex)!);
   }
 
 
-  openDialog(action: string, obj: ContainerTableElement | null) {
+  openDialog(action: string, obj: ProjectTableElement | null) {
     if(obj != null)
       obj.action = action;
     else { // @ts-ignore
@@ -94,7 +94,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  update(item: ContainerTableElement){
+  update(item: ProjectTableElement){
     this.dataStream.data.forEach((value)=>{
       if(value.id == item.id){
         value.name = item.name;
@@ -102,12 +102,12 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  add(item: ContainerTableElement) {
+  add(item: ProjectTableElement) {
     this.dataToDisplay = [...this.dataStream.data, item];
     this.dataStream.data = this.dataToDisplay;
   }
 
-  delete(item: ContainerTableElement) {
+  delete(item: ProjectTableElement) {
     const originalIndex = this.dataStream.data.findIndex(
       (dataItem) => dataItem.id === item.id
     );

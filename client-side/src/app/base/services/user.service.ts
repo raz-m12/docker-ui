@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {User} from "../models/user.interface";
-import {environment} from "../../../../environments/environment";
+import {env} from "../../../../environments/environment";
+
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class UserService {
 
   // TODO manage users
   public login(user: User) {
-    return this.http.post(environment.serverEndpoint + "user/authenticate", {
+    return this.http.post(env.serverEndpoint + "user/authenticate", {
       username: "bob",
       password: "martin"
     }).pipe(map(() => {
@@ -21,6 +22,6 @@ export class UserService {
   }
 
   register(user: User) {
-    return this.http.post<User>(environment.serverEndpoint + "user/register", user);
+    return this.http.post<User>(env.serverEndpoint + "user/register", user);
   }
 }

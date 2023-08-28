@@ -1,6 +1,6 @@
 import {Component, Inject, Optional} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ContainerTableElement} from "../../../base/models/container.interface";
+import {ProjectTableElement} from "../../../base/models/container.interface";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
@@ -11,12 +11,12 @@ import {ToastrService} from "ngx-toastr";
 })
 export class TableDialogComponent {
   action?: string;
-  model:ContainerTableElement;
+  model:ProjectTableElement;
   form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<TableDialogComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: ContainerTableElement,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: ProjectTableElement,
     public toast: ToastrService,
     public formBuilder: FormBuilder) {
 

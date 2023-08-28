@@ -1,5 +1,7 @@
-<ng-container *ngIf="container !== undefined; else emptyTemplate">
-  <h2>Container: {{ container!.name }}</h2>
+<!-- Add tooltips for disabled buttons below: https://material.angular.io/components/tooltip/overview -->
+
+<ng-container *ngIf="project !== undefined; else emptyTemplate">
+  <h2>Container: {{ project.name }}</h2>
   <div class="row">
     <div class="col-12">
       <div class="table-title">
@@ -15,9 +17,9 @@
       </button>
     </div>
     <div class="col-6 col-lg-4">
-      <button mat-raised-button (click)="stop()">
-        <mat-icon>stop</mat-icon>
-        Stop
+      <button mat-raised-button (click)="create()">
+        <mat-icon>create</mat-icon>
+        Create
       </button>
     </div>
     <div class="col-6 col-lg-4">
@@ -27,9 +29,27 @@
       </button>
     </div>
     <div class="col-6 col-lg-4">
+      <button mat-raised-button (click)="stop()">
+        <mat-icon>stop</mat-icon>
+        Stop
+      </button>
+    </div>
+    <div class="col-6 col-lg-4">
       <button mat-raised-button (click)="restart()">
         <mat-icon>restart_alt</mat-icon>
         Restart
+      </button>
+    </div>
+    <div class="col-6 col-lg-4">
+      <button mat-raised-button (click)="composeUp()">
+        <mat-icon>delete</mat-icon>
+        Down
+      </button>
+    </div>
+    <div class="col-6 col-lg-4">
+      <button mat-raised-button (click)="composeDown()">
+        <mat-icon>delete</mat-icon>
+        Up
       </button>
     </div>
     <div class="col-6 col-lg-4">
@@ -38,7 +58,7 @@
         Delete
       </button>
     </div>
-    <div class="col-6 col-lg-4">
+    <div class="col-3 col-lg-2">
       <button mat-raised-button (click)="logs()">
         <mat-icon>event_note</mat-icon>
         Logs

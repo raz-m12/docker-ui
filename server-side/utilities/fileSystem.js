@@ -1,4 +1,4 @@
-const environment = require("../config/environment");
+const env = require("../config/environment");
 const fs = require('fs');
 const path = require('path');
 
@@ -6,8 +6,8 @@ const path = require('path');
  * Public function used to load all docker-projects
  * @returns {*[]} docker-projects as a dictionary
  */
-exports.loadProjects = function loadProjects() {
-    const projects = findComposeFiles(environment.projectsPath, true);
+exports.parseComposeFiles = function loadProjects() {
+    const projects = findComposeFiles(env.projectsPath, true);
     console.log(projects);
 
     return projects;
@@ -33,10 +33,11 @@ function findComposeFiles(dirPath, recursive, result = []) {
             const parts = filePath.split("/");
             const name = parts[parts.length - 2].toLowerCase()
                 .replace(/\s/g, '')
-                .replace(/[^a-z0-9-]/g, ''); // container-like name
+                .replace(/[^a-z0-9-_]/g, ''); // container-like name
             const item = {
                 id: name,
-                path: path.join(__dirname, filePath),
+                composeDir: path.dirname(filePath),
+                composePath: path.join(__dirname, filePath),
                 yaml: fs.readFileSync(filePath, "utf-8")// absolute path
             }
             result.push(item);
@@ -45,3 +46,4 @@ function findComposeFiles(dirPath, recursive, result = []) {
 
     return result;
 }
+
