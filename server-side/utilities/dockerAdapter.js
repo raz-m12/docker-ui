@@ -1,30 +1,16 @@
 const Docker = require('dockerode');
 const compose = require("docker-compose");
-const env = require("../config/environment");
 
 // Create a Docker instance
 const docker = new Docker();
 
-const root = env.projectsPath;
-
-
-const containersODE = function(opts, callback) {
-  docker.listContainers(opts, (err, containers) => {
-    if (err) {
-      callback(err);
-    }
-
-    callback(null, containers);
-  });
-}
-exports.containersODE = containersODE;
 
 /**
  * Used to load all active and passive containers
  * @param sources the array of files to parse
  */
 exports.psProjects = function(sources) {
-  const promises = sources.map(src => psProject({ cwd: src.composeDir }));
+  const promises = sources.map(src => psProject({ cwd: src.composeDir, log: true }));
 
   return Promise.all(promises);
 }
@@ -36,15 +22,7 @@ function psProject (opts) {
       throw err;
     });
 }
-/*
-  docker.listContainers(opts, (err, containers) => {
-    if (err) {
-      callback(err);
-    }
 
-    callback(null, containers);
-  });
- */
 
 /**
  * A function which builds
@@ -53,7 +31,7 @@ function psProject (opts) {
  */
 exports.buildImage = async function (project) {
   return docker.buildImage(
-    {context: project.composeDir + "/app", src: ['Dockerfile']},
+    { context: project.composeDir + "/app", src: ['Dockerfile'] },
     { t: project.id },
     (err, data) => {
       console.log("Error: " + err);

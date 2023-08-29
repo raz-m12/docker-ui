@@ -1,7 +1,6 @@
 const { parseComposeFiles } = require("../utilities/fileSystem");
-const { containers, buildImage, containersODE, psProjects} = require("../utilities/dockerAdapter");
+const { buildImage, psProjects} = require("../utilities/dockerAdapter");
 const express = require("express")
-const {filterProjects} = require("../utilities/utilities");
 
 // Global variables
 const app = express();
