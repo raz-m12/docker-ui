@@ -1,7 +1,7 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = new express.Router();
 
-let userController = require("../controllers/user.controller");
+const userController = require('../controllers/user.controller');
 
 /* GET users listing. */
 router.post('/authenticate', userController.authenticate);

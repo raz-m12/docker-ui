@@ -1,7 +1,7 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = new express.Router();
 
-let containerController = require("../controllers/container.controller");
+const containerController = require('../controllers/container.controller');
 
 /* GET users listing. */
 router.get('/projects', containerController.listProjects);

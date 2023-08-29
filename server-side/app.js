@@ -2,29 +2,31 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require("cors");
-const environment = require("./config/environment");
+const cors = require('cors');
+const environment = require('./config/environment');
 const app = express();
 
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Register Mongoose
-
+/**
+ * Used to connect to the mongo database.
+ */
 function connectToDB() {
-  let mongoose = require("mongoose").default;
+  const mongoose = require('mongoose').default;
 
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   }).then(() => {
-    console.log("Successful connection to MongoDB");
+    console.log('Successful connection to MongoDB');
   }).catch((error) => {
-    console.log("Failure while connecting to MongoDB", error);
+    console.log('Failure while connecting to MongoDB', error);
   });
 
   mongoose.Promise = global.Promise;
@@ -32,15 +34,16 @@ function connectToDB() {
 connectToDB();
 
 // register routes
-let userRouter = require('./routes/user');
-let containerRouter = require('./routes/container');
+const userRouter = require('./routes/user');
+const containerRouter = require('./routes/container');
 app.use('/user', userRouter);
 app.use('/', containerRouter);
 
 
 // Set up the port to listen to
-const endpoint = environment.serverEndpoint
-/*
+/* TODO delete
+const endpoint = environment.serverEndpoint;
+
 app.listen(endpoint, () => {
   console.log(`Running  on ${endpoint}`);
 });

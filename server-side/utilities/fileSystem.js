@@ -1,49 +1,48 @@
-const env = require("../config/environment");
+const env = require('../config/environment');
 const fs = require('fs');
 const path = require('path');
+const {Project} = require('../models/project.model');
 
 /**
  * Public function used to load all docker-projects
- * @returns {*[]} docker-projects as a dictionary
+ * @return {*[]} docker-projects as a dictionary
  */
 exports.parseComposeFiles = function loadProjects() {
-    const projects = findComposeFiles(env.projectsPath, true);
-    console.log(projects);
+  const projects = findComposeFiles(env.projectsPath, true);
+  console.log(projects);
 
-    return projects;
-}
+  return projects;
+};
 
 /**
  * Find docker-compose files
- * @param dirPath path to inspect
- * @param recursive check only upper level directories
- * @param result the result being updated recursively
- * @returns {*[]} a dictionary with key as project name and value the path
+ * @param {string} dirPath path to inspect
+ * @param {boolean} recursive check only upper level directories
+ * @param {[]} result the result being updated recursively
+ * @return {*[]} a dictionary with key as project name and value the path
  */
 function findComposeFiles(dirPath, recursive, result = []) {
-    const files = fs.readdirSync(dirPath);
+  const files = fs.readdirSync(dirPath);
 
-    files.forEach(file => {
-        const filePath = path.join(dirPath, file);
-        const stats = fs.statSync(filePath);
+  files.forEach((file) => {
+    const filePath = path.join(dirPath, file);
+    const stats = fs.statSync(filePath);
 
-        if (stats.isDirectory() && recursive) {
-            findComposeFiles(filePath, false, result); // Search subdirectory
-        } else if (stats.isFile() && file === 'docker-compose.yml' || file === 'docker-compose.yaml') {
-            const parts = filePath.split("/");
-            const name = parts[parts.length - 2].toLowerCase()
-                .replace(/\s/g, '')
-                .replace(/[^a-z0-9-_]/g, ''); // container-like name
-            const item = {
-                id: name,
-                composeDir: path.dirname(filePath),
-                composePath: path.join(__dirname, filePath),
-                yaml: fs.readFileSync(filePath, "utf-8")// absolute path
-            }
-            result.push(item);
-        }
-    })
+    if (stats.isDirectory() && recursive) {
+      findComposeFiles(filePath, false, result); // Search subdirectory
+    } else if (stats.isFile() && file === 'docker-compose.yml' ||
+               file === 'docker-compose.yaml') {
+      const parts = filePath.split('/');
+      const id = parts[parts.length - 2].toLowerCase()
+          .replace(/\s/g, '')
+          .replace(/[^a-z0-9-_]/g, ''); // container-like name
+      const item = new Project(id, path.dirname(filePath),
+          path.join(__dirname, filePath), fs.readFileSync(filePath, 'utf-8'),
+      );
+      result.push(item);
+    }
+  });
 
-    return result;
+  return result;
 }
 

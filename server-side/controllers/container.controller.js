@@ -1,6 +1,6 @@
-const { parseComposeFiles } = require("../utilities/fileSystem");
-const { buildImage, psProjects} = require("../utilities/dockerAdapter");
-const express = require("express")
+const express = require('express');
+const {parseComposeFiles} = require('../utilities/fileSystem');
+const {buildImage, psProjects} = require('../utilities/dockerAdapter');
 
 // Global variables
 const app = express();
@@ -9,21 +9,34 @@ const app = express();
 app.locals.projects = parseComposeFiles();
 
 /**
- * Retrieves all projects stored on the file system.
+ * Get a cached project based on a name
+ * @param {string} name the project name
+ * @return {*} existing project
  */
-exports.listProjects = function (req, res) {
+function getProjectWithName(name) {
+  return app.locals.projects.find((p) => p.id === name);
+}
+
+/**
+ * Retrieves all projects stored on the file system.
+ * @param {any} req the express request
+ * @param {any} res the express result
+ */
+exports.listProjects = (req, res) => {
   const srcInfo = parseComposeFiles();
   app.locals.projects = srcInfo;
 
   psProjects(srcInfo).then((containers) => {
     res.header('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-      projects: srcInfo,
-      containers: containers
-    }));
+    res.send(
+        JSON.stringify({
+          projects: srcInfo,
+          containers,
+        }),
+    );
   });
 
-/*
+  /*
   srcInfo.forEach(p => {
     containers({ cwd: p.composePath }).then((containers, err) => {
       results.push(containers);
@@ -41,96 +54,108 @@ exports.listProjects = function (req, res) {
 
 /**
  * Used for building an image from a Dockerfile
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.buildImage = function (req, res) {
-  const id = req.body["id"];
+exports.buildImage = (req, res) => {
+  const {id} = req.body;
   const project = getProjectWithName(id);
-  buildImage(project).then(img => {
+  buildImage(project).then(() => {
     res.header('Content-Type', 'application/json');
-    res.send(JSON.stringify({ success: true }));
+    res.send(JSON.stringify({success: true}));
   });
-}
+};
 
 /**
  * Create a container from an initialized image
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.createContainer = function (req, res) {
+exports.createContainer = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Start an already existent container
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.startContainer = function (req, res) {
+exports.startContainer = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Stop a running container
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-
-exports.stopContainer = function (req, res) {
+exports.stopContainer = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Restart a container
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.restartContainer = function (req, res) {
+exports.restartContainer = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Use docker-compose up on a docker compose file
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.composeUp = function (req, res) {
+exports.composeUp = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Use docker-compose down on a docker compose file
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.composeDown = function (req, res) {
+exports.composeDown = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Remove an existing image
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.removeImage = function (req, res) {
+exports.removeImage = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Get all logs pertaining to an existing container
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.getLogs = function (req, res) {
+exports.getLogs = (req, res) => {
   res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({ success: true }));
-}
+  res.send(JSON.stringify({success: true}));
+};
 
 /**
  * Get project given project name.
+ * @param {any} req the express request
+ * @param {any} res the express result
  */
-exports.getProject = function(req, res) {
-  console.log("Getting project: " + id);
+exports.getProject = (req, res) => {
+  console.log(`Getting project: ${req.body.id}`);
 
-  getProjectWithName(req.body.id)
-    .then((project, err) => {
-
-    });
-}
-
-function getProjectWithName(name) {
-  return app.locals.projects.find(p => p.id === name);
-}
+  getProjectWithName(req.body.id).then(() => {});
+};
 
 /*
   containersODE( { all: true }, (err, containers) => {
