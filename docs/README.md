@@ -14,7 +14,7 @@
     <tbody>
         <tr>
             <td>1</td>
-            <td>High</td>
+            <td>Low</td>
             <td>Home Page</td>
             <td>First-time visitor</td>
             <td>Quickly understand what Docker-UI offers</td>
@@ -23,16 +23,16 @@
         </tr>
         <tr>
             <td>2</td>
-            <td>High</td>
+            <td>Low</td>
             <td>Documentation Page</td>
-            <td>Unexperienced user</td>
+            <td>Inexperienced user</td>
             <td>User-friendly documentation page</td>
             <td>Easily learn what features the website offers.</td>
             <td>Yes</td>
         </tr>
         <tr>
             <td>3</td>
-            <td>High</td>
+            <td>Low</td>
             <td>Login/Signup Page</td>
             <td>Returning user or new member</td>
             <td>Seamlessly load previous sessions&#39; content</td>
@@ -40,13 +40,22 @@
             <td>Yes</td>
         </tr>
         <tr>
-            <td>4</td>
+            <td>4.1</td>
             <td>High</td>
             <td>Dashboard Page</td>
             <td>Registered user</td>
             <td>Centralized dashboard to interact with a container’s actions</td>
             <td>Manage created containers during their execution.</td>
-            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>4.2</td>
+            <td>High</td>
+            <td>Dashboard Functionality</td>
+            <td>Docker user</td>
+            <td>Customize projects maintained by DockerUI</td>
+            <td>Manipulate docker containers via docker-compose files.</td>
+            <td>No</td>
         </tr>
         <tr>
             <td>5</td>
@@ -100,9 +109,26 @@
             </td>
         </tr>
         <tr>
-            <td>4</td>
-            <td>Dashboard Page</td>
-            <td>Design a clean and organized dashboard layout.<br />  Display account information and settings through intuitive and easy to use icons and widgets.<br />  Ensure easy navigation between different sections or features.<br /></td>
+            <td>4.1</td>
+            <td>Dashboard design</td>
+            <td>
+                4.1.1. Design a clean and organized dashboard layout using Figma (see(<br /> 
+                4.1.2. Display account information and settings through intuitive and easy to use icons and widgets.<br />
+                4.1.3. Ensure easy navigation between different sections or features.<br />
+            </td>
+        </tr>
+        <tr>
+            <td>4.2</td>
+            <td>Dashboard Functionaity</td>
+            <td>
+                4.2.1. buildAll(path) - Used to build all services given a Docker Compose file<br /> 
+                4.2.2. logs(services, path) uses configServices(path) - Show logs of service(s)<br /> 
+                4.2.3. kill(path) - Force stop service containers<br /> 
+                4.2.4. stop(path) - Stop running containers without removing them<br /> 
+                4.2.5. start or restartAll(path) - Restart all services<br /> 
+                4.2.6. upAll(path) - Build, (re)creates, starts, and attaches to containers for all services <br />
+                4.2.7. down(path) - Stops containers and removes containers, networks, volumes, and images created by up<br />
+            </td>
         </tr>
         <tr>
             <td>5</td>
