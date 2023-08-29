@@ -1,7 +1,7 @@
-const express = require('express');
-const router = new express.Router();
+import * as containerController from '../controllers/container.controller.js';
 
-const containerController = require('../controllers/container.controller');
+import express from 'express';
+const router = new express.Router();
 
 /* GET users listing. */
 router.get('/projects', containerController.listProjects);
@@ -15,4 +15,4 @@ router.post('/composeDown', containerController.composeDown);
 router.delete('/remove/:id', containerController.removeImage);
 router.get('/logs/:id', containerController.getLogs);
 
-module.exports = router;
+export default router;

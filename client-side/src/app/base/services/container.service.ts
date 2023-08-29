@@ -17,10 +17,10 @@ export class ContainerService {
 
   loadProjects(): Observable<Project[]> {
     return this.httpClient
-      .get<{ p: Project[], c: Container[] }>(env.serverEndpoint + "projects", )
+      .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
-        this.projects = data.p;
-        this.containers = data.c;
+        this.projects = data.projects;
+        this.containers = data.containers;
         return this.projects;
       }));
   }

@@ -1,5 +1,5 @@
-const Docker = require('dockerode');
-const compose = require('docker-compose');
+import Docker from 'dockerode';
+import compose from 'docker-compose';
 
 // Create a Docker instance
 const docker = new Docker();
@@ -11,7 +11,7 @@ const docker = new Docker();
  * @return {Promise<any>} A promise that completes with the containers contained
  * in docker-projects
  */
-exports.psProjects = function(sources) {
+export function psProjects(sources) {
   const promises = sources.map(
       (src) => psProject({cwd: src.composeDir, log: true}));
 
@@ -37,7 +37,7 @@ function psProject(opts) {
  * @param {Project} project Used to build the image
  * @return {Promise<*>} Used for listening to the result
  */
-exports.buildImage = async function(project) {
+export function buildImage(project) {
   return docker.buildImage(
       {context: project.composeDir + '/app', src: ['Dockerfile']},
       {t: project.id},
@@ -48,7 +48,6 @@ exports.buildImage = async function(project) {
 };
 
 /**
- const Docker = require('dockerode');
 
  // Create a Docker instance
  const docker = new Docker();

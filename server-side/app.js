@@ -1,10 +1,17 @@
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors');
-const environment = require('./config/environment');
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
+import environment from './config/environment.js';
+import mongoose from 'mongoose';
+import userRouter from './routes/user.js';
+import containerRouter from './routes/container.js';
+import {fileURLToPath} from 'url';
+
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors());
 app.use(logger('dev'));
@@ -18,8 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Used to connect to the mongo database.
  */
 function connectToDB() {
-  const mongoose = require('mongoose').default;
-
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -34,8 +39,7 @@ function connectToDB() {
 connectToDB();
 
 // register routes
-const userRouter = require('./routes/user');
-const containerRouter = require('./routes/container');
+
 app.use('/user', userRouter);
 app.use('/', containerRouter);
 
@@ -48,4 +52,4 @@ app.listen(endpoint, () => {
   console.log(`Running  on ${endpoint}`);
 });
 */
-module.exports = app;
+export default app;

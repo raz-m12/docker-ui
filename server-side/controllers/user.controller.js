@@ -1,16 +1,21 @@
-User = require('../models/user.model');
+import User from '../models/user.model.js';
 
-exports.authenticate = function(req, res) {
+/**
+ * Used to authenticate a user
+ * @param {any} req the express request
+ * @param {any} res the express result
+ */
+export function authenticate(req, res) {
   res.header('Content-Type', 'application/json');
   res.send(JSON.stringify('respond with a resource'));
-};
+}
 
 /**
  * Registration of a user
  * @param {any} req the express request
  * @param {any} res the express result
  */
-exports.register = function(req, res) {
+export function register(req, res) {
   User.find({username: req.body.username}).then((users) => {
     if (users.length > 0) {
       res.status(409).send({

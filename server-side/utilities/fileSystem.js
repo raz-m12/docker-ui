@@ -1,13 +1,17 @@
-const env = require('../config/environment');
-const fs = require('fs');
-const path = require('path');
-const {Project} = require('../models/project.model');
+import Project from '../models/project.model.js';
+
+import env from '../config/environment.js';
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Public function used to load all docker-projects
- * @return {*[]} docker-projects as a dictionary
+ * @return {Project[]} docker-projects as a dictionary
  */
-exports.parseComposeFiles = function loadProjects() {
+export function loadProjects() {
   const projects = findComposeFiles(env.projectsPath, true);
   console.log(projects);
 
