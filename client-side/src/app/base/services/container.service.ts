@@ -1,4 +1,4 @@
-import {map, Observable, ReplaySubject, Subject} from "rxjs";
+import {map, Observable, ReplaySubject, Subject } from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Container, ProjectTableElement, Project} from "../models/container.interface";
 import {Injectable} from "@angular/core";
@@ -17,10 +17,10 @@ export class ContainerService {
 
   loadProjects(): Observable<Project[]> {
     return this.httpClient
-      .get(env.serverEndpoint + "projects")
-      .pipe(map((data: any) => {
-        this.projects = data.projects;
-        this.containers = data.containers;
+      .get<{ p: Project[], c: Container[] }>(env.serverEndpoint + "projects", )
+      .pipe(map(data => {
+        this.projects = data.p;
+        this.containers = data.c;
         return this.projects;
       }));
   }

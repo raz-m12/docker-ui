@@ -13,6 +13,7 @@ export class UserService {
 
   // TODO manage users
   public login(user: User) {
+    console.log(user);
     return this.http.post(env.serverEndpoint + "user/authenticate", {
       username: "bob",
       password: "martin"

@@ -7,7 +7,7 @@ import {MatSidenav} from "@angular/material/sidenav";
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  @Input("snav") snav: MatSidenav | undefined;
+  @Input() snav: MatSidenav | undefined;
 
   toggle() {
     this.snav?.toggle();

@@ -26,7 +26,7 @@ export class RegisterComponent {
   }
   public register() {
     this.userService.register(this.form.value).subscribe(
-      (data) => {
+      () => {
         this.alertService.success("Registration successful");
         this.router.navigate(["/login"]);
     });

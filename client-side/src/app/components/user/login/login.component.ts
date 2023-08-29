@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../base/services/services";
 
@@ -9,9 +9,9 @@ import {UserService} from "../../../base/services/services";
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   form: FormGroup;
-  isRegistering: boolean = false;
+  isRegistering = false;
   constructor(private userService: UserService,
               private formBuilder: FormBuilder) {
 
@@ -22,13 +22,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
 
   public login() {
     // Attempt login
     return this.userService.login(this.form.value).subscribe(
-      response => {
+      () => {
         alert("Successful http call... + " + this.form.value.username);
       }
       // TODO RV handle error message

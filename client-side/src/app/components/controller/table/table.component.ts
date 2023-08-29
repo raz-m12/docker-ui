@@ -71,15 +71,16 @@ export class TableComponent implements OnInit, AfterViewInit {
 
 
   openDialog(action: string, obj: ProjectTableElement | null) {
+    let newElem = null;
     if(obj != null)
       obj.action = action;
-    else { // @ts-ignore
-        obj = {}; obj.action = action;
+    else {
+        newElem = { action: action };
       }
 
     const dialogRef = this.dialog.open(TableDialogComponent, {
       width: '600px',
-      data: obj ? obj: {},
+      data: obj ? obj: newElem,
       disableClose: true
     });
 
