@@ -35,21 +35,6 @@ export function listProjects(req, res) {
         }),
     );
   });
-
-  /*
-  srcInfo.forEach(p => {
-    containers({ cwd: p.composePath }).then((containers, err) => {
-      results.push(containers);
-    })
-  });
-  containers( { cwd: root + "/1._node-example" }).then((err, containers) => {
-    res.header('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-      projects: app.locals.projects,
-      containers: filterProjects(containers)
-    }));
-  });
-*/
 }
 
 /**
@@ -72,8 +57,12 @@ export function buildImage(req, res) {
  * @param {any} res the express result
  */
 export function createContainer(req, res) {
-  res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({success: true}));
+  const {id} = req.body;
+  const project = getProjectWithName(id);
+  docker.createContainer(project).then(() => {
+    res.header('Content-Type', 'application/json');
+    res.send(JSON.stringify({success: true}));
+  });
 }
 
 /**
@@ -157,12 +146,3 @@ export function getProject(req, res) {
   getProjectWithName(req.body.id).then(() => {});
 }
 
-/*
-  containersODE( { all: true }, (err, containers) => {
-    res.header('Content-Type', 'application/json');
-    res.send(JSON.stringify({
-      projects: app.locals.projects,
-      containers: filterProjects(containers)
-    }));
-  });
-*/
