@@ -38,14 +38,16 @@ function psProject(opts) {
  * @return {Promise<*>} Used for listening to the result
  */
 export function buildImage(project) {
-  return docker.buildImage(
-      {context: project.composeDir + '/app', src: ['Dockerfile']},
-      {t: project.id},
-      (err, data) => {
-        console.log('Error: ' + err);
-        console.log('Data: ' + data);
+  return compose.buildAll(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (err, data) => {
+          console.log('Error: ' + err);
+          console.log('Data: ' + data);
+        },
+        log: true,
       });
-};
+}
 
 /**
 
