@@ -1,5 +1,6 @@
 import compose from 'docker-compose';
-
+import * as socketIO from './socketio.service.js';
+import {REPLY_LOG} from './socketio.service.js';
 
 /**
  * Used to load all active and passive containers
@@ -16,7 +17,8 @@ export function psProjects(sources) {
 }
 
 /**
- * Lists containers information
+ * Lists containers information. No need to log since it is used
+ * for loading projects.
  * @param {{}} opts options needed by the docker-compose packet.
  * @return {Promise<any>} promise with container information
  */
@@ -32,16 +34,20 @@ function psProject(opts) {
 /**
  * A function which builds
  * @param {Project} project Used to build the image
+ * @param {boolean} log Whether to enable logging
  * @return {Promise<*>} Used for listening to the result
  */
-export function buildImage(project) {
+export function buildImage(project, log) {
   return compose.buildAll(
       {
         cwd: project.composeDir + '/app',
-        callback: (err, data) => {
-          console.log('Error: ' + err);
-          console.log('Data: ' + data);
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
         },
-        log: true,
+        log: log,
       });
 }

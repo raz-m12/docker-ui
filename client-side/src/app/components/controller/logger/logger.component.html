@@ -1,1 +1,4 @@
-<p>controller-log works!</p>
+<mat-form-field class="app-full-width">
+  <mat-label>Logging information</mat-label>
+  <textarea [readonly]="true" [rows]="25" [cols]="80" [(ngModel)]="logger.data" matInput placeholder="Loading..."></textarea>
+</mat-form-field>

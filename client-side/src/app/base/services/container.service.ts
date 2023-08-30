@@ -1,21 +1,30 @@
-import {map, Observable, ReplaySubject, Subject } from "rxjs";
+import {map, Observable, of, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Container, ProjectTableElement, Project} from "../models/container.interface";
 import {Injectable} from "@angular/core";
 import {ToastrService} from "ngx-toastr";
 import {env} from "../../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable({ providedIn: "root"})
 export class ContainerService {
-  private projects: Project[] = [];
+  // Grid data
+  private projects: Project[] | undefined = undefined;
   private containers: Container[] = [];
 
+  // Used for changing the active project
   private activeContainerSubject: ReplaySubject<ProjectTableElement> = new ReplaySubject();
 
-  constructor(public httpClient: HttpClient, public toastr: ToastrService) {
+  constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router) {
   }
 
-  loadProjects(): Observable<Project[]> {
+  /**
+   * Load all table data by providing cache data if available
+   */
+  loadProjectsWithCache(): Observable<Project[]> {
+    if(this.projects !== undefined)
+      return of(this.projects!);
+
     return this.httpClient
       .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
@@ -33,11 +42,11 @@ export class ContainerService {
     }));
   }
 
-  setActiveContainer(container: ProjectTableElement) {
+  setProject(container: ProjectTableElement) {
     this.activeContainerSubject.next(container);
   }
 
-  activeContainer(): Subject<ProjectTableElement> {
+  activeProject(): Subject<ProjectTableElement> {
     return this.activeContainerSubject;
   }
 
@@ -105,11 +114,10 @@ export class ContainerService {
     }));
   }
 
-  getLogs(id: string) {
-    const url = env.serverEndpoint + `logs/${id}`;
-    return this.httpClient.get(url).pipe(map(() => {
-      this.toastr.success("Showing logs.");
-    }));
+
+
+  goToConfigPage(selected: ProjectTableElement) {
+    this.router.navigate(['dashboard', selected.id]);
   }
 }
 

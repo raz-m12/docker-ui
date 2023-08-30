@@ -42,3 +42,47 @@ td, th {
   color: white;
   text-align: center;
 }
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.add-btn {
+  text-align: right;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.highlight {
+  background-color: whitesmoke !important;
+}
+
+.greenBox {
+  font-weight: bold;
+  width: 40px;
+  height: 38px;
+  background-color: green;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.redBox {
+  font-weight: bold;
+  width: 46px;
+  height: 38px;
+  background-color: red;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 import express from 'express';
-import {loadProjects} from '../utilities/fileSystem.js';
-import * as docker from '../utilities/dockerAdapter.js';
+import {loadProjects} from '../services/fileSystem.service.js';
+import * as docker from '../services/dockerAdapter.service.js';
 
 // Global variables
 const app = express();
@@ -45,7 +45,7 @@ export function listProjects(req, res) {
 export function buildImage(req, res) {
   const {id} = req.body;
   const project = getProjectWithName(id);
-  docker.buildImage(project).then(() => {
+  docker.buildImage(project, true).then(() => {
     res.header('Content-Type', 'application/json');
     res.send(JSON.stringify({success: true}));
   });

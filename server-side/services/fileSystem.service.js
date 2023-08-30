@@ -16,7 +16,7 @@ export function loadProjects() {
   console.log(projects);
 
   return projects;
-};
+}
 
 /**
  * Find docker-compose files

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bin/www" type="NodeJSConfigurationType" path-to-node="$APPLICATION_CONFIG_DIR$/node/node-v18.15.0-linux-x64/bin/node" node-parameters="/usr/local/bin/nodemon" path-to-js-file="$PROJECT_DIR$/server-side/bin/www.js" working-dir="$PROJECT_DIR$/server-side">
+  <configuration default="false" name="bin/www" type="NodeJSConfigurationType" path-to-node="$APPLICATION_CONFIG_DIR$/node/node-v18.15.0-linux-x64/bin/node" node-parameters="/usr/local/bin/nodemon" path-to-js-file="bin/www.js" working-dir="$PROJECT_DIR$/server-side">
     <envs>
       <env name="DEBUG" value="server-side:*" />
     </envs>

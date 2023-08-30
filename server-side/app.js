@@ -1,30 +1,48 @@
+/**
+ * Module dependencies.
+ */
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
-import environment from './config/environment.js';
 import mongoose from 'mongoose';
-import userRouter from './routes/user.js';
-import containerRouter from './routes/container.js';
 import {fileURLToPath} from 'url';
 
-const app = express();
+import environment from './config/environment.js';
+import userRouter from './routes/user.js';
+import containerRouter from './routes/container.js';
+
+/**
+ * File system
+ */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const app = express();
+
+/**
+ * Used for setting up express.
+ */
+(function setup(app) {
+  // Set up express
+  app.use(cors());
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({extended: false}));
+  app.use(cookieParser());
+  app.use(express.static(path.join(__dirname, 'public')));
+
+  // register routes
+  app.use('/user', userRouter);
+  app.use('/', containerRouter);
+})(app);
 
 // Register Mongoose
 /**
  * Used to connect to the mongo database.
  */
-function connectToDB() {
+(function connectToDB() {
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -35,21 +53,7 @@ function connectToDB() {
   });
 
   mongoose.Promise = global.Promise;
-}
-connectToDB();
-
-// register routes
-
-app.use('/user', userRouter);
-app.use('/', containerRouter);
+})();
 
 
-// Set up the port to listen to
-/* TODO delete
-const endpoint = environment.serverEndpoint;
-
-app.listen(endpoint, () => {
-  console.log(`Running  on ${endpoint}`);
-});
-*/
 export default app;

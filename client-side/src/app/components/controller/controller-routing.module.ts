@@ -3,15 +3,20 @@ import { Routes, RouterModule } from "@angular/router";
 import {DashboardComponent} from "../../base/dashboard/dashboard.component";
 import {BaseModule} from "../../base/base.module";
 import {ControllerComponent} from "./controller.component";
+import {ControlCenterComponent} from "./control-center/control-center.component";
 
 const controllerRoutes: Routes = [
   {
-    path: "",
+    path: "dashboard",
     component: DashboardComponent,
     children: [
       {
         path: "",
         component: ControllerComponent
+      },
+      {
+        path: ":id",
+        component: ControlCenterComponent
       }
     ]
   }

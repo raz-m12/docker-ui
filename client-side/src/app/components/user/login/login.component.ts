@@ -1,6 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../base/services/services";
+import {first} from "rxjs";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class LoginComponent {
 
   public login() {
     // Attempt login
-    return this.userService.login(this.form.value).subscribe(
+    this.userService.login(this.form.value).pipe(first()).subscribe(
       () => {
         alert("Successful http call... + " + this.form.value.username);
       }

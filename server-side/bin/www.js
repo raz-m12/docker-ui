@@ -3,24 +3,28 @@
 /**
  * Module dependencies.
  */
-
-
 import app from '../app.js';
 import http from 'http';
 import debugModule from 'debug';
+import {createSocketIO, setupSocketIO} from '../services/socketio.service.js';
 const debug = debugModule('server-side:server');
+
 /**
  * Get port from environment and store in Express.
  */
-
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
 const server = http.createServer(app);
+
+/**
+ * Enables a client to connect to the server. Used for logging functionality.
+ */
+createSocketIO(server);
+setupSocketIO();
 
 /**
  * Listen on provided port, on all network interfaces.

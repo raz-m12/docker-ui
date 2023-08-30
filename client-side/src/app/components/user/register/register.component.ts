@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../base/services/services";
+import {first} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterComponent {
     });
   }
   public register() {
-    this.userService.register(this.form.value).subscribe(
+    this.userService.register(this.form.value).pipe(first()).subscribe(
       () => {
         this.alertService.success("Registration successful");
         this.router.navigate(["/login"]);

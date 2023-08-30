@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -7,6 +7,7 @@ import {TableDialogComponent} from "../table-dialog/table-dialog.component";
 import {ProjectTableElement, Project} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
 import {ToastrService} from "ngx-toastr";
+import {Subject, takeUntil} from "rxjs";
 
 const ELEMENT_DATA: ProjectTableElement[] = [
   {id: "1", name: 'Hydrogen', status: false, path: ""},
@@ -25,23 +26,39 @@ const ELEMENT_DATA: ProjectTableElement[] = [
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
+  // Grid variables
   displayedColumns: string[] = ['name', 'status', 'action'];
   dataToDisplay: ProjectTableElement[] = ELEMENT_DATA;
+  dataStream: MatTableDataSource<ProjectTableElement>;
+  selectedRowIndex = "";
 
+  // Pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  dataStream: MatTableDataSource<ProjectTableElement>;
-  selectedRowIndex = "";
+  // Unsubscription
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(public dialog: MatDialog, public CS: ContainerService, public toast: ToastrService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
 
+  /**
+   * Unsubscription
+   */
+  ngOnDestroy(): void {
+    // unsubscribe to all observables.
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  /**
+   * Load-up projects
+   */
   ngOnInit(): void {
-    this.CS.loadProjects().subscribe((projects: Project[]) => {
+    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: Project[]) => {
       const data: ProjectTableElement[] = projects.map((p): ProjectTableElement => {
         return {
           name: p.id,
@@ -55,21 +72,34 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Set up pagination and sorting
+   */
   ngAfterViewInit() {
     this.dataStream.paginator = this.paginator;
     this.dataStream.sort = this.sort;
   }
 
+  /**
+   * Highlight a selected item
+   * @param row that was selected
+   */
   highlight(row: ProjectTableElement){
     if(row.id === this.selectedRowIndex)
       this.selectedRowIndex = "";
     else
       this.selectedRowIndex = row.id;
 
-    this.CS.setActiveContainer(this.dataStream.data.find(c => c.id === this.selectedRowIndex)!);
+    const selected = this.dataStream.data.find(c => c.id === this.selectedRowIndex)!;
+    this.CS.setProject(selected);
+    this.CS.goToConfigPage(selected);
   }
 
-
+  /**
+   * Opens the modal used for deletion/creation
+   * @param action Update, Delete, Add
+   * @param obj potential selected item
+   */
   openDialog(action: string, obj: ProjectTableElement | null) {
     let newElem = null;
     if(obj != null)
@@ -95,6 +125,11 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Update an existing item
+   * @param item which was selected
+   * @deprecated
+   */
   update(item: ProjectTableElement){
     this.dataStream.data.forEach((value)=>{
       if(value.id == item.id){
@@ -103,11 +138,21 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Add an item
+   * @param item which was created
+   * @deprecated
+   */
   add(item: ProjectTableElement) {
     this.dataToDisplay = [...this.dataStream.data, item];
     this.dataStream.data = this.dataToDisplay;
   }
 
+  /**
+   * Deletion of a project
+   * @param item which was selected
+   * @deprecated
+   */
   delete(item: ProjectTableElement) {
     const originalIndex = this.dataStream.data.findIndex(
       (dataItem) => dataItem.id === item.id
@@ -122,6 +167,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Apply filters
+   * @param event contains search text
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataStream.filter = filterValue.trim().toLowerCase();
