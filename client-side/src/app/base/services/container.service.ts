@@ -58,11 +58,11 @@ export class ContainerService {
     }));
   }
 
-  create(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "create",  {
+  kill(id: string) {
+    return this.httpClient.post(env.serverEndpoint + "kill",  {
       id: id
     }).pipe(map(() => {
-      this.toastr.success("Successfully created the container.");
+      this.toastr.success("Successfully killed the container.");
     }));
   }
 
@@ -106,15 +106,6 @@ export class ContainerService {
       this.toastr.success("Composed down successfully.");
     }));
   }
-
-  delete(id: string) {
-    const url = env.serverEndpoint + `remove/${id}`;
-    return this.httpClient.delete(url).pipe(map(() => {
-      this.toastr.success("Successfully removed the container.");
-    }));
-  }
-
-
 
   goToConfigPage(selected: ProjectTableElement) {
     this.router.navigate(['dashboard', selected.id]);

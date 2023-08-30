@@ -36,8 +36,8 @@ export class ControlCenterComponent implements OnDestroy {
     this.CS.build(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
-  create() {
-    this.CS.create(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+  kill() {
+    this.CS.kill(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   start() {
@@ -58,10 +58,6 @@ export class ControlCenterComponent implements OnDestroy {
 
   composeDown() {
     this.CS.composeDown(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
-  }
-
-  delete() {
-    this.CS.delete(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   toggleLogs() {

@@ -56,23 +56,13 @@ export function buildImage(req, res) {
  * @param {any} req the express request
  * @param {any} res the express result
  */
-export function createContainer(req, res) {
+export function killContainers(req, res) {
   const {id} = req.body;
   const project = getProjectWithName(id);
-  docker.createContainer(project).then(() => {
+  docker.killContainers(project, true).then(() => {
     res.header('Content-Type', 'application/json');
     res.send(JSON.stringify({success: true}));
   });
-}
-
-/**
- * Start an already existent container
- * @param {any} req the express request
- * @param {any} res the express result
- */
-export function startContainer(req, res) {
-  res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({success: true}));
 }
 
 /**
@@ -115,15 +105,6 @@ export function composeDown(req, res) {
   res.send(JSON.stringify({success: true}));
 }
 
-/**
- * Remove an existing image
- * @param {any} req the express request
- * @param {any} res the express result
- */
-export function removeImage(req, res) {
-  res.header('Content-Type', 'application/json');
-  res.send(JSON.stringify({success: true}));
-}
 
 /**
  * Get all logs pertaining to an existing container

@@ -3,6 +3,28 @@ import * as socketIO from './socketio.service.js';
 import {REPLY_LOG} from './socketio.service.js';
 
 /**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function killContainers(project, log) {
+  return compose.kill(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
+        },
+        log: log,
+      });
+}
+
+
+/**
  * Used to load all active and passive containers
  * docker-compose ps for each project
  * @param {Project[]} sources the array of files to parse
@@ -51,3 +73,4 @@ export function buildImage(project, log) {
         log: log,
       });
 }
+
