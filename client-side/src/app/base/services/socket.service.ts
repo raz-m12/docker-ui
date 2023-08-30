@@ -1,8 +1,9 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {io, Socket} from 'socket.io-client';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {env} from "../../../../environments/environment";
 import {SocketIODTO} from "../models/sockerio.interface";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class SocketService implements OnDestroy {
   private socket: Socket;
   private textDecoder = new TextDecoder();
 
-  constructor() {
+  constructor(public toastr: ToastrService) {
     this.socket = io(env.serverEndpoint);
   }
 
@@ -27,19 +28,25 @@ export class SocketService implements OnDestroy {
   }
 
   toggle() {
-    this.connected()? this.disconnect(): this.connect();
+    if(this.connected()) {
+      this.disconnect();
+      this.toastr.success("Logger output is disabled");
+    } else {
+      this.connect();
+      this.toastr.success("Logger output is enabled");
+    }
   }
   connected() {
     return this.socket.connected;
   }
 
   // Emit an event to the server
-  emitEvent(eventName: string, data: any): void {
+  emitEvent(eventName: string, data: never): void {
     this.socket.emit(eventName, data);
   }
 
   // Listen to events from the server
-  onEvent(eventName: string): Observable<any> {
+  onEvent(eventName: string): Observable<string> {
     return new Observable(observer => {
       this.socket.on(eventName, (data: SocketIODTO) => {
         observer.next(this.textDecoder.decode(data.buffer));

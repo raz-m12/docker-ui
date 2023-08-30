@@ -138,9 +138,8 @@ export function getLogs(req, res) {
 /**
  * Get project given project name.
  * @param {any} req the express request
- * @param {any} res the express result
  */
-export function getProject(req, res) {
+export function getProject(req) {
   console.log(`Getting project: ${req.body.id}`);
 
   getProjectWithName(req.body.id).then(() => {});
