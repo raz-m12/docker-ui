@@ -23,6 +23,89 @@ export function killContainers(project, log) {
       });
 }
 
+/**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function stopContainers(project, log) {
+  return compose.stop(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
+        },
+        log: log,
+      });
+}
+
+/**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function restartContainers(project, log) {
+  return compose.restartAll(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
+        },
+        log: log,
+      });
+}
+
+/**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function composeUp(project, log) {
+  return compose.upAll(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
+        },
+        log: log,
+      });
+}
+
+/**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function composeDown(project, log) {
+  return compose.down(
+      {
+        cwd: project.composeDir + '/app',
+        callback: (msg, src) => {
+          if (log) {
+            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          }
+          console.log('Error: ' + msg);
+          console.log('Data: ' + src);
+        },
+        log: log,
+      });
+}
 
 /**
  * Used to load all active and passive containers
@@ -74,3 +157,44 @@ export function buildImage(project, log) {
       });
 }
 
+/**
+ * Force stop service containers
+ * @param {Project} project which contains docker-compose file
+ * @param {boolean} log whether to enable logging
+ * @return {Promise<*>} Used for listening to the result
+ */
+export function getLogs(project, log) {
+  return getServices(project, log).then((services) => {
+    return compose.logs(services.data.services, {
+      cwd: project.composeDir + '/app',
+      callback: (msg, src) => {
+        if (log) {
+          socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+        }
+        console.log('Error: ' + msg);
+        console.log('Data: ' + src);
+      },
+      log: log,
+    });
+  });
+}
+
+/**
+ * Gets a list of services for the given project
+ * @param {Project} project the project configuration file
+ * @param {boolean} log whether to log
+ * @return {Promise<*>} the service configuration files
+ */
+function getServices(project, log) {
+  return compose.configServices({
+    cwd: project.composeDir + '/app',
+    callback: (msg, src) => {
+      if (log) {
+        socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+      }
+      console.log('Error: ' + msg);
+      console.log('Data: ' + src);
+    },
+    log: log,
+  });
+}

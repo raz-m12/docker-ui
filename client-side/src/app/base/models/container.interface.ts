@@ -37,3 +37,7 @@ export interface Projects {
   projects: Project[];
   containers: Container[];
 }
+
+export interface ContainerResult {
+  success: boolean
+}

@@ -8,8 +8,8 @@ router.get('/projects', containerController.listProjects);
 router.post('/build', containerController.buildImage);
 router.get('/logs/:id', containerController.getLogs);
 router.post('/kill', containerController.killContainers);
-router.post('/stop', containerController.stopContainer);
-router.post('/restart', containerController.restartContainer);
+router.post('/stop', containerController.stopContainers);
+router.post('/restart', containerController.restartContainers);
 router.post('/composeUp', containerController.composeUp);
 router.post('/composeDown', containerController.composeDown);
 

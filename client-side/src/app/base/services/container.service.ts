@@ -1,6 +1,6 @@
 import {map, Observable, of, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Container, ProjectTableElement, Project} from "../models/container.interface";
+import {Container, ProjectTableElement, Project, ContainerResult} from "../models/container.interface";
 import {Injectable} from "@angular/core";
 import {ToastrService} from "ngx-toastr";
 import {env} from "../../../../environments/environment";
@@ -51,59 +51,90 @@ export class ContainerService {
   }
 
   build(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "build",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "build",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Successfully built the container.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Successfully built the container");
+      else
+        this.toastr.error("Build process failed");
     }));
   }
 
   kill(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "kill",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "kill",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Successfully killed the container.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Successfully killed the container");
+      else
+        this.toastr.success("Kill command failed");
     }));
   }
 
   start(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "start",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "start",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Successfully started the container.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Successfully started all container");
+      else
+        this.toastr.error("Failed to start some container");
     }));
   }
 
 
   stop(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "stop",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "stop",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Successfully stopped the container.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Successfully stopped all containers");
+      else
+        this.toastr.success("Failed to stop some container");
     }));
   }
 
   restart(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "restart",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "restart",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Successfully restarted the container.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Successfully restarted the container");
+      else
+        this.toastr.error("Failed to restart some container");
     }));
   }
 
   composeUp(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "composeUp",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeUp",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Composed up successfully.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Composed up successfully");
+      else
+        this.toastr.error("Composed up failed");
     }));
   }
 
   composeDown(id: string) {
-    return this.httpClient.post(env.serverEndpoint + "composeDown",  {
+    return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeDown",  {
       id: id
-    }).pipe(map(() => {
-      this.toastr.success("Composed down successfully.");
+    }).pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Compose down was successful");
+      else
+        this.toastr.error("Compose down failed");
+    }));
+  }
+
+  getLogs(id: string) {
+    return this.httpClient.get<ContainerResult>(env.serverEndpoint + `logs/${id}`)
+      .pipe(map((data) => {
+      if(data.success)
+        this.toastr.success("Get logs was successful");
+      else
+        this.toastr.error("Failure while getting logs");
     }));
   }
 

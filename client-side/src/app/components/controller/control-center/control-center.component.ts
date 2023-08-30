@@ -60,6 +60,10 @@ export class ControlCenterComponent implements OnDestroy {
     this.CS.composeDown(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
+  getLogs() {
+    this.CS.getLogs(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+  }
+
   toggleLogs() {
     this.socketService.toggle();
   }

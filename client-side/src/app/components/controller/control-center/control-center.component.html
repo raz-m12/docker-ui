@@ -25,6 +25,12 @@
               Logs
             </button>
           </div>
+          <div class="col-3 col-lg-2">
+            <button mat-raised-button (click)="getLogs()">
+              <mat-icon>event_note</mat-icon>
+              Get logs
+            </button>
+          </div>
           <div class="col-6 col-lg-4">
             <button mat-raised-button (click)="kill()">
               <mat-icon>kill</mat-icon>
@@ -44,13 +50,13 @@
             </button>
           </div>
           <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="composeUp()">
+            <button mat-raised-button (click)="composeDown()">
               <mat-icon>delete</mat-icon>
               Down
             </button>
           </div>
           <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="composeDown()">
+            <button mat-raised-button (click)="composeUp()">
               <mat-icon>delete</mat-icon>
               Up
             </button>
