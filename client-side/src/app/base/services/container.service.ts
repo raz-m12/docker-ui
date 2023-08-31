@@ -65,8 +65,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "kill",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Successfully killed the container");
+        this.refreshProjects();
+      }
       else
         this.toastr.success("Kill command failed");
     }));
@@ -76,8 +78,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "start",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Successfully started all container");
+        this.refreshProjects();
+      }
       else
         this.toastr.error("Failed to start some container");
     }));
@@ -88,8 +92,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "stop",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Successfully stopped all containers");
+        this.refreshProjects();
+      }
       else
         this.toastr.success("Failed to stop some container");
     }));
@@ -99,8 +105,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "restart",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Successfully restarted the container");
+        this.refreshProjects();
+      }
       else
         this.toastr.error("Failed to restart some container");
     }));
@@ -110,8 +118,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeUp",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Composed up successfully");
+        this.refreshProjects();
+      }
       else
         this.toastr.error("Composed up failed");
     }));
@@ -121,8 +131,10 @@ export class ContainerService {
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeDown",  {
       id: id
     }).pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Compose down was successful");
+        this.refreshProjects();
+      }
       else
         this.toastr.error("Compose down failed");
     }));
@@ -131,8 +143,9 @@ export class ContainerService {
   getLogs(id: string) {
     return this.httpClient.get<ContainerResult>(env.serverEndpoint + `logs/${id}`)
       .pipe(map((data) => {
-      if(data.success)
+      if(data.success) {
         this.toastr.success("Get logs was successful");
+      }
       else
         this.toastr.error("Failure while getting logs");
     }));
@@ -140,6 +153,13 @@ export class ContainerService {
 
   goToConfigPage(selected: ProjectTableElement) {
     this.router.navigate(['dashboard', selected.id]);
+  }
+
+  /**
+   * Clear fetched projects, makes call to download them again
+   */
+  refreshProjects() {
+    this.projects = undefined;
   }
 }
 

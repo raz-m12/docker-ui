@@ -9,6 +9,7 @@ import { ControlCenterComponent } from './control-center/control-center.componen
 import { TableDialogComponent } from './table-dialog/table-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ContainerService} from "../../base/services/services";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -18,13 +19,13 @@ import {ContainerService} from "../../base/services/services";
     ControlCenterComponent,
     TableDialogComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ControllerRoutingModule,
-    BaseModule.forRoot(),
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ControllerRoutingModule,
+        BaseModule.forRoot(),
+        FormsModule
+    ],
   providers: [ ContainerService ]
 })
 export class ControllerModule { }

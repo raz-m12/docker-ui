@@ -11,6 +11,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ]
 })
 export class BaseModule {

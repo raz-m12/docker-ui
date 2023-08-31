@@ -32,6 +32,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   dataToDisplay: ProjectTableElement[] = ELEMENT_DATA;
   dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
+  isLoading = true;
 
   // Pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,7 +41,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Unsubscription
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public dialog: MatDialog, public CS: ContainerService, public toast: ToastrService) {
+  constructor(public dialog: MatDialog, public CS: ContainerService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
@@ -69,6 +70,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
       this.dataStream.data = [...data];
+      this.isLoading = false;
     });
   }
 
