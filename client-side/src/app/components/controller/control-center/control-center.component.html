@@ -1,88 +1,69 @@
 <!-- TODO Add tooltips for disabled buttons below: https://material.angular.io/components/tooltip/overview -->
 <div class="container">
-
-  <ng-container *ngIf="project !== undefined; else emptyTemplate">
-    <div class="row">
-      <div class="col-12">
-        <h2>Container: {{ project.name }}</h2>
-        <div class="row">
-          <div class="col-12">
-            <div class="table-title">
-              <h2>Actions</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="build()">
-              <mat-icon>build</mat-icon>
-              Build
-            </button>
-          </div>
-          <div class="col-3 col-lg-2">
-            <button mat-raised-button (click)="toggleLogs()">
-              <mat-icon>event_note</mat-icon>
-              Logs
-            </button>
-          </div>
-          <div class="col-3 col-lg-2">
-            <button mat-raised-button (click)="getLogs()">
-              <mat-icon>event_note</mat-icon>
-              Get logs
-            </button>
-          </div>
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="kill()">
-              <mat-icon>kill</mat-icon>
-              Kill
-            </button>
-          </div>
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="stop()">
-              <mat-icon>stop</mat-icon>
-              Stop
-            </button>
-          </div>
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="restart()">
-              <mat-icon>restart_alt</mat-icon>
-              Restart
-            </button>
-          </div>
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="composeDown()">
-              <mat-icon>delete</mat-icon>
-              Down
-            </button>
-          </div>
-          <div class="col-6 col-lg-4">
-            <button mat-raised-button (click)="composeUp()">
-              <mat-icon>delete</mat-icon>
-              Up
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <app-log-area></app-log-area>
-      </div>
-    </div>
-
-  </ng-container>
-
-  <ng-template #emptyTemplate>
-    <div class="row">
-      <div class="col-12">
-        <h2>Select a container to manage</h2>
-      </div>
-    </div>
-  </ng-template>
+  <div clasS="title">
+    <h2>Container management: {{ project.name }}</h2>
+  </div>
   <div class="row">
     <div class="col-12">
+      <h2>Actions</h2>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="button-container d-flex justify-content-center flex-wrap">
+        <button mat-raised-button (click)="build()">
+          <mat-icon>build</mat-icon>
+          Build
+        </button>
+        <button mat-raised-button (click)="getLogs()">
+          <mat-icon>event_note</mat-icon>
+          Get logs
+        </button>
+        <button mat-raised-button (click)="kill()">
+          <mat-icon>power_off</mat-icon>
+          Kill
+        </button>
+        <button mat-raised-button (click)="stop()">
+          <mat-icon>stop</mat-icon>
+          Stop
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="button-container d-flex justify-content-center flex-wrap">
+        <button mat-raised-button (click)="restart()">
+          <mat-icon>restart_alt</mat-icon>
+          Restart
+        </button>
+        <button mat-raised-button (click)="composeDown()">
+          <mat-icon>delete</mat-icon>
+          Down
+        </button>
+        <button mat-raised-button (click)="composeUp()">
+          <mat-icon>delete</mat-icon>
+          Up
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <app-log-area></app-log-area>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button mat-raised-button (click)="toggleLogs()" class="fixedWidth float-end">
+        <mat-icon>event_note</mat-icon>
+        Logs
+      </button>
+
       <button mat-raised-button (click)="goBack()" title="Add" class="fixedWidth float-end">
-        <mat-icon>add</mat-icon>
+        <mat-icon>arrow_back</mat-icon>
         Back
       </button>
     </div>

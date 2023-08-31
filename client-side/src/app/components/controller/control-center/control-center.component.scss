@@ -9,3 +9,20 @@
 .fixedWidth {
   width: 100px;
 }
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-margin {
+  margin-left: 10px;
+  margin-right: 10px;
+}

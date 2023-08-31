@@ -1,3 +1,4 @@
+
 export interface ProjectTableElement {
   id: string;
   name: string;
@@ -5,8 +6,6 @@ export interface ProjectTableElement {
   action?: string;
   path: string;
   yaml?: string;
-
-
 }
 
 export interface Container {
@@ -31,6 +30,7 @@ export interface Project {
   id: string;
   path: string;
   yaml: string;
+  isActive: (cs: Container[]) => boolean;
 }
 
 export interface Projects {

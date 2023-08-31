@@ -6,21 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
 import {ProjectTableElement, Project} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
-import {ToastrService} from "ngx-toastr";
 import {Subject, takeUntil} from "rxjs";
 
-const ELEMENT_DATA: ProjectTableElement[] = [
-  {id: "1", name: 'Hydrogen', status: false, path: ""},
-  {id: "2", name: 'Helium', status: false, path: ""},
-  {id: "3", name: 'Lithium', status: false, path: ""},
-  {id: "4", name: 'Beryllium', status: true, path: ""},
-  {id: "5", name: 'Boron', status: true, path: ""},
-  {id: "6", name: 'Carbon', status: true, path: ""},
-  {id: "7", name: 'Nitrogen', status: false, path: ""},
-  {id: "8", name: 'Oxygen', status: false, path: ""},
-  {id: "9", name: 'Fluorine', status: true, path: ""},
-  {id: "10", name: 'Neon', status: true, path: ""},
-];
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -29,7 +16,7 @@ const ELEMENT_DATA: ProjectTableElement[] = [
 export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Grid variables
   displayedColumns: string[] = ['name', 'status', 'action'];
-  dataToDisplay: ProjectTableElement[] = ELEMENT_DATA;
+  dataToDisplay: ProjectTableElement[] = [];
   dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
   isLoading = true;
@@ -59,17 +46,8 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
    * Load-up projects
    */
   ngOnInit(): void {
-    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: Project[]) => {
-      const data: ProjectTableElement[] = projects.map((p): ProjectTableElement => {
-        return {
-          name: p.id,
-          path: p.path,
-          yaml: p.yaml,
-          status: this.CS.isActive(p.id),
-          id: p.id
-        }
-      });
-      this.dataStream.data = [...data];
+    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
+      this.dataStream.data = [...projects];
       this.isLoading = false;
     });
   }
@@ -93,7 +71,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedRowIndex = row.id;
 
     const selected = this.dataStream.data.find(c => c.id === this.selectedRowIndex)!;
-    this.CS.setProject(selected);
+    this.CS.nextProject(selected);
     this.CS.goToConfigPage(selected);
   }
 

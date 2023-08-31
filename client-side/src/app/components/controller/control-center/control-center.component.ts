@@ -4,6 +4,7 @@ import {ContainerService} from "../../../base/services/container.service"
 import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {SocketService} from "../../../base/services/socket.service";
+import {ContainerManagementService} from "../../../base/services/container-management.service";
 
 @Component({
   selector: 'app-control-center',
@@ -17,7 +18,7 @@ export class ControlCenterComponent implements OnDestroy {
   // Unsubscribe
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService) {
+  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService, public CM: ContainerManagementService) {
     this.project = undefined!;
     this.CS.activeProject().pipe(takeUntil(this.ngUnsubscribe)).subscribe(c => {
       this.project = c
@@ -33,35 +34,31 @@ export class ControlCenterComponent implements OnDestroy {
   }
 
   build() {
-    this.CS.build(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.build(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   kill() {
-    this.CS.kill(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
-  }
-
-  start() {
-    this.CS.start(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.kill(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   stop() {
-    this.CS.stop(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.stop(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   restart() {
-    this.CS.restart(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.restart(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   composeUp() {
-    this.CS.composeUp(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.composeUp(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   composeDown() {
-    this.CS.composeDown(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.composeDown(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   getLogs() {
-    this.CS.getLogs(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
+    this.CM.getLogs(this.project.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe();
   }
 
   toggleLogs() {

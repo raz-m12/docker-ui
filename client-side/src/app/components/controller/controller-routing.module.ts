@@ -2,8 +2,9 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import {DashboardComponent} from "../../base/dashboard/dashboard.component";
 import {BaseModule} from "../../base/base.module";
-import {ControllerComponent} from "./controller.component";
 import {ControlCenterComponent} from "./control-center/control-center.component";
+import {TableComponent} from "./table/table.component";
+import {ProjectSelectedGuard} from "../../base/guards/project-selected.guard";
 
 const controllerRoutes: Routes = [
   {
@@ -12,11 +13,12 @@ const controllerRoutes: Routes = [
     children: [
       {
         path: "",
-        component: ControllerComponent
+        component: TableComponent
       },
       {
         path: ":id",
-        component: ControlCenterComponent
+        component: ControlCenterComponent,
+        canActivate: [ProjectSelectedGuard]
       }
     ]
   }
