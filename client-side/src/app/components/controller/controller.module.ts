@@ -4,7 +4,7 @@ import { BaseModule } from "../../base/base.module";
 import { ControllerRoutingModule } from "./controller-routing.module";
 import { LoggerComponent } from './logger/logger.component';
 import { TableComponent } from './table/table.component';
-import { ControlCenterComponent } from './control-center/control-center.component';
+import { ManagementComponent } from './management/management.component';
 import { TableDialogComponent } from './table-dialog/table-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ContainerService} from "../../base/services/services";
@@ -13,7 +13,7 @@ import {ContainerService} from "../../base/services/services";
   declarations: [
     LoggerComponent,
     TableComponent,
-    ControlCenterComponent,
+    ManagementComponent,
     TableDialogComponent
   ],
     imports: [

@@ -7,11 +7,11 @@ import {SocketService} from "../../../base/services/socket.service";
 import {ContainerManagementService} from "../../../base/services/container-management.service";
 
 @Component({
-  selector: 'app-control-center',
-  templateUrl: './control-center.component.html',
-  styleUrls: ['./control-center.component.scss']
+  selector: 'app-management',
+  templateUrl: './management.component.html',
+  styleUrls: ['./management.component.scss']
 })
-export class ControlCenterComponent implements OnDestroy {
+export class ManagementComponent implements OnDestroy {
   // Selected element
   project: ProjectTableElement;
 
