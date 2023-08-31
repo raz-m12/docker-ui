@@ -1,6 +1,6 @@
-import {BehaviorSubject, map, Observable, of, ReplaySubject, Subject} from "rxjs";
+import {first, map, Observable, of, ReplaySubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Container, ProjectTableElement, Project, ContainerResult} from "../models/container.interface";
+import {Container, ProjectTableElement, Project} from "../models/container.interface";
 import {Injectable} from "@angular/core";
 import {ToastrService} from "ngx-toastr";
 import {env} from "../../../../environments/environment";
@@ -8,45 +8,46 @@ import {Router} from "@angular/router";
 
 @Injectable({ providedIn: "root"})
 export class ContainerService {
-  get tableData(): ProjectTableElement[] | undefined {
-    return this._tableData;
-  }
 
-  set tableData(value: ProjectTableElement[] | undefined) {
-    this._tableData = value;
-  }
   // Grid data
   private projects: Project[] | undefined = undefined;
-  private _tableData: ProjectTableElement[] | undefined;
+
+
+  private _tableData!: ProjectTableElement[];
 
   // Used for changing the active project
   private activeContainerSubject: ReplaySubject<ProjectTableElement> = new ReplaySubject<ProjectTableElement>();
 
   constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router) {
+    console.log("creating");
   }
 
   /**
    * Load all table data by providing cache data if available
    */
   loadProjectsWithCache(): Observable<ProjectTableElement[]> {
-    if(this.tableData !== undefined)
-      return of(this.tableData!);
+    if(this._tableData !== undefined)
+      return of(this._tableData!);
 
     return this.httpClient
       .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
         this.projects = data.projects;
-        this.tableData = data.projects.map((p): ProjectTableElement => {
-          return {
-            name: p.id,
-            path: p.path,
-            yaml: p.yaml,
-            status: this.isActive(p.id, data.containers),
-            id: p.id
-          }
-        });
-        return this.tableData!;
+        this._tableData = data.projects.map(this.getTableData(data.containers));
+        return this._tableData!;
       }));
+  }
+
+  private getTableData(containers: Container[]): (p: Project) => ProjectTableElement {
+    return (p: Project): ProjectTableElement => {
+      return {
+        name: p.id,
+        path: p.path,
+        yaml: p.yaml,
+        status: this.isActive(p.id, containers),
+        id: p.id
+      }
+    }
   }
 
   /**
@@ -87,10 +88,29 @@ export class ContainerService {
     this.projects = undefined;
   }
 
+  /**
+   * Checks if a project id exists
+   * @param id project to verify
+   */
   existsProject(id: string) {
-    const project = this.tableData?.find(p => p.id === id);
-    this.nextProject(project!);
-    return project !== undefined;
+    const project = this._tableData?.find(p => p.id === id);
+    const found = project !== undefined;
+    if(found)
+      this.nextProject(project);
+    return found;
+  }
+
+  /**
+   * Checks whether a project exists given project id
+   * @param id project id
+   */
+  httpProjectExists(id: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      // Simulate an asynchronous authentication check
+      this.loadProjectsWithCache().pipe(first()).subscribe(() => {
+        resolve(this.existsProject(id));
+      });
+    });
   }
 }
 

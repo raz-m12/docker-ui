@@ -7,7 +7,6 @@ import { TableComponent } from './table/table.component';
 import { ManagementComponent } from './management/management.component';
 import { TableDialogComponent } from './table-dialog/table-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ContainerService} from "../../base/services/services";
 
 @NgModule({
   declarations: [
