@@ -43,6 +43,7 @@ const app = express();
  * Used to connect to the mongo database.
  */
 (function connectToDB() {
+  console.log("Mongo url: " + environment.mongodb.uri);
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,

@@ -9,14 +9,11 @@ import {Router} from "@angular/router";
 @Injectable({ providedIn: "root"})
 export class ContainerService {
 
-  // Grid data
-  private projects: Project[] | undefined = undefined;
-
-
   private _tableData!: ProjectTableElement[];
 
   // Used for changing the active project
   private activeContainerSubject: ReplaySubject<ProjectTableElement> = new ReplaySubject<ProjectTableElement>();
+  private needsRefresh: boolean = true;
 
   constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router) {
     console.log("creating");
@@ -26,25 +23,25 @@ export class ContainerService {
    * Load all table data by providing cache data if available
    */
   loadProjectsWithCache(): Observable<ProjectTableElement[]> {
-    if(this._tableData !== undefined)
+    if(!this.needsRefresh)
       return of(this._tableData!);
 
     return this.httpClient
       .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
-        this.projects = data.projects;
+        this.needsRefresh = false;
         this._tableData = data.projects.map(this.getTableData(data.containers));
         return this._tableData!;
       }));
   }
 
-  private getTableData(containers: Container[]): (p: Project) => ProjectTableElement {
-    return (p: Project): ProjectTableElement => {
+  private getTableData(containers: Container[]): (p: Project, i: number) => ProjectTableElement {
+    return (p: Project, i: number): ProjectTableElement => {
       return {
         name: p.id,
         path: p.path,
         yaml: p.yaml,
-        status: this.isActive(p.id, containers),
+        status: this.isActive(i, containers),
         id: p.id
       }
     }
@@ -52,15 +49,11 @@ export class ContainerService {
 
   /**
    * Checks status of the given project id
-   * @param id of the project
+   * @param position of the project
    * @param containers active/passive containers fetched via docker-compose ps
    */
-  private isActive(id: string, containers: Container[]) {
-    return containers.filter(c => {
-      return c.out.indexOf(id) >= 0
-    }).some(obj => obj.data.services.some(s => {
-      return s.state == "Up";
-    }));
+  private isActive(position: number, containers: Container[]) {
+    return containers[position].out.indexOf("Up") >= 0;
   }
   /**
    * Broadcasts the container to all listeners
@@ -85,7 +78,7 @@ export class ContainerService {
    * Clear fetched projects, makes call to download them again
    */
   refreshProjects() {
-    this.projects = undefined;
+    this.needsRefresh = true;
   }
 
   /**

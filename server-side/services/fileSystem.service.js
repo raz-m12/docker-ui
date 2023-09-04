@@ -37,11 +37,12 @@ function findComposeFiles(dirPath, recursive, result = []) {
     } else if (stats.isFile() && file === 'docker-compose.yml' ||
                file === 'docker-compose.yaml') {
       const parts = filePath.split('/');
-      const id = parts[parts.length - 2].toLowerCase()
-          .replace(/\s/g, '')
-          .replace(/[^a-z0-9-_]/g, ''); // container-like name
+      const dir = parts[parts.length - 2];
+
+      // Use String.replace() to enforce the pattern
+      const id = dir.replace(/[^a-z0-9-_]+/g, "").replace(/^[_-]+/, "");
       const item = new Project(id, path.dirname(filePath),
-          path.join(__dirname, filePath), fs.readFileSync(filePath, 'utf-8'),
+          path.join(__dirname, filePath, id), fs.readFileSync(filePath, 'utf-8')
       );
       result.push(item);
     }

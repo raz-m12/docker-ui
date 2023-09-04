@@ -116,7 +116,7 @@ export function composeDown(project, log) {
  */
 export function psProjects(sources) {
   const promises = sources.map(
-      (src) => psProject({cwd: src.composeDir, log: true}));
+      (src) => psProject({cwd: src.composeDir, log: true, composeOptions: [["-p", src.id]]}));
 
   return Promise.all(promises);
 }
