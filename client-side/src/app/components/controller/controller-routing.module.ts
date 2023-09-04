@@ -10,6 +10,7 @@ const controllerRoutes: Routes = [
   {
     path: "dashboard",
     component: DashboardComponent,
+    canActivateChild: [],
     children: [
       {
         path: "",
