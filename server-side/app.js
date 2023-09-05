@@ -12,6 +12,9 @@ import {fileURLToPath} from 'url';
 import environment from './config/environment.js';
 import userRouter from './routes/user.js';
 import containerRouter from './routes/container.js';
+// TODO relazione
+import {expressjwt} from 'express-jwt';
+
 
 /**
  * File system
@@ -36,6 +39,32 @@ const app = express();
   // register routes
   app.use('/user', userRouter);
   app.use('/', containerRouter);
+
+  // using JWT auth to secure the api.
+  app.use(
+      expressjwt({
+        secret: environment.secret,
+        algorithms: ['HS256'],
+        getToken: function(req) {
+          if (
+            req.headers.authorization &&
+              req.headers.authorization.split(' ')[0] === 'Bearer'
+          ) {
+            return req.headers.authorization.split(' ')[1];
+          } else if (req.query && req.query.token) {
+            return req.query.token;
+          }
+          return null;
+        },
+      }).unless({
+        path: [
+          '/user/authenticate',
+          '/index.html',
+          '/*.js',
+          '/*.css',
+        ],
+      }),
+  );
 })(app);
 
 // Register Mongoose
@@ -43,7 +72,7 @@ const app = express();
  * Used to connect to the mongo database.
  */
 (function connectToDB() {
-  console.log("Mongo url: " + environment.mongodb.uri);
+  console.log('Mongo url: ' + environment.mongodb.uri);
   mongoose.connect(environment.mongodb.uri, {
     useUnifiedTopology: true,
     useNewUrlParser: true,

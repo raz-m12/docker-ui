@@ -8,6 +8,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ToolbarComponent} from "../toolbar/toolbar.component";
+import {BaseModule} from "../base.module";
 
 
 
@@ -22,7 +23,7 @@ import {ToolbarComponent} from "../toolbar/toolbar.component";
     RouterLink,
     MatIconModule,
     MatToolbarModule,
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
   exports: [DashboardComponent, ToolbarComponent],
 

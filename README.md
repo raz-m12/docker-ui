@@ -23,3 +23,4 @@ Languages and frameworks -> nodeJS -> Node assistance for NodeJS
 
 # Diagrams
 DrawIO, Figma
+Angular folder structure: [documentation](https://angular-folder-structure.readthedocs.io/en/latest/path-alias.html)

@@ -66,7 +66,7 @@ export class ManagementComponent implements OnDestroy {
   }
 
   goBack(){
-    this.router.navigate(["dashboard"]);
+    this.router.navigate(["/dashboard/containers"]);
   }
 
 }

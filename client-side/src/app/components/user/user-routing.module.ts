@@ -5,17 +5,19 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {BaseModule} from "../../base/base.module";
 import {DashboardComponent} from "../../base/dashboard/dashboard.component";
+import {AuthGuard} from "../../base/guards/auth.guard";
+import {HomeComponent} from "./home/home.component";
 
-// TODO RV need to add authentication guard
 const routes: Routes = [
   {
     path: "",
     component: DashboardComponent,
     children: [
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // Redirect to the Docker homepage
+      { path: "login", component: LoginComponent },
+      { path: "register", component: RegisterComponent }
     ]
   },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent }
 ];
 
 @NgModule({

@@ -5,20 +5,20 @@ import {AuthGuard} from "./base/guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: 'user',
+    path: '',
     loadChildren: () => import('./components/user/user.module').then(m => m.UserModule)
   },
   {
-    path: '',
+    path: 'dashboard',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./components/controller/controller.module').then(module => module.ControllerModule)
+    loadChildren: () => import('./components/dashboard/controller.module').then(module => module.ControllerModule)
   }
 ]
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes, { }),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     CommonModule
   ],
   exports: [RouterModule]

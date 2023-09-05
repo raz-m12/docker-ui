@@ -13,6 +13,7 @@ import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AuthGuard} from "./guards/auth.guard";
+import {UserService} from "./services/user.service";
 
 @NgModule({
   imports: [
@@ -37,14 +38,14 @@ import {AuthGuard} from "./guards/auth.guard";
     MatSortModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ]
 })
 export class BaseModule {
   static forRoot(): ModuleWithProviders<BaseModule> {
     return {
       ngModule: BaseModule,
-      providers: [AuthGuard]
+      providers: [AuthGuard, UserService]
     };
   }
 }

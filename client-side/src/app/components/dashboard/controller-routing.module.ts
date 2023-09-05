@@ -5,8 +5,9 @@ import {BaseModule} from "../../base/base.module";
 import {ManagementComponent} from "./management/management.component";
 import {TableComponent} from "./table/table.component";
 import {ProjectSelectedGuard} from "../../base/guards/project-selected.guard";
+import {HomeComponent} from "../user/home/home.component";
 
-const controllerRoutes: Routes = [
+const dashboardRoutes: Routes = [
   {
     path: "",
     component: DashboardComponent,
@@ -14,10 +15,14 @@ const controllerRoutes: Routes = [
     children: [
       {
         path: "",
+        component: HomeComponent
+      },
+      {
+        path: "containers",
         component: TableComponent
       },
       {
-        path: ":id",
+        path: "containers/:id",
         component: ManagementComponent,
         canActivate: [ProjectSelectedGuard]
       }
@@ -27,7 +32,7 @@ const controllerRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(controllerRoutes),
+    RouterModule.forChild(dashboardRoutes),
     BaseModule.forRoot()
   ],
   exports: [RouterModule]

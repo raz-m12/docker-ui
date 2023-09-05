@@ -71,7 +71,7 @@ export class ContainerService {
   }
 
   goToConfigPage(selected: ProjectTableElement) {
-    this.router.navigate(['dashboard', selected.id]);
+    this.router.navigate(['/dashboard/containers', selected.id]);
   }
 
   /**
