@@ -30,3 +30,14 @@ h1.app-name {
   flex: 1 0 auto;
 }
 
+.db-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+footer {
+  text-align: center;
+  margin-top: auto;
+}
+
