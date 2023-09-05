@@ -6,7 +6,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { RegisterComponent } from './register/register.component';
 import {BaseModule} from "../../base/base.module";
 import {UserService} from "../../base/services/services";
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from '../dashboard/home/home.component';
 
 
 

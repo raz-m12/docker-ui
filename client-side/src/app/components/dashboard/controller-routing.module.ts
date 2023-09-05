@@ -5,7 +5,7 @@ import {BaseModule} from "../../base/base.module";
 import {ManagementComponent} from "./management/management.component";
 import {TableComponent} from "./table/table.component";
 import {ProjectSelectedGuard} from "../../base/guards/project-selected.guard";
-import {HomeComponent} from "../user/home/home.component";
+import {HomeComponent} from "./home/home.component";
 
 const dashboardRoutes: Routes = [
   {
