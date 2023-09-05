@@ -13,7 +13,7 @@ export class ContainerService {
 
   // Used for changing the active project
   private activeContainerSubject: ReplaySubject<ProjectTableElement> = new ReplaySubject<ProjectTableElement>();
-  private needsRefresh: boolean = true;
+  private needsRefresh = true;
 
   constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router) {
     console.log("creating");

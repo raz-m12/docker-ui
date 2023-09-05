@@ -4,7 +4,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
-import {ProjectTableElement, Project} from "../../../base/models/container.interface"
+import {ProjectTableElement} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
 import {Subject, takeUntil} from "rxjs";
 
