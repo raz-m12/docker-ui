@@ -8,7 +8,7 @@ import {ProjectSelectedGuard} from "../../base/guards/project-selected.guard";
 
 const controllerRoutes: Routes = [
   {
-    path: "dashboard",
+    path: "",
     component: DashboardComponent,
     canActivateChild: [],
     children: [

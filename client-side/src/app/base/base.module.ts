@@ -12,6 +12,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AuthGuard} from "./guards/auth.guard";
 
 @NgModule({
   imports: [
@@ -43,7 +44,7 @@ export class BaseModule {
   static forRoot(): ModuleWithProviders<BaseModule> {
     return {
       ngModule: BaseModule,
-      providers: []
+      providers: [AuthGuard]
     };
   }
 }
