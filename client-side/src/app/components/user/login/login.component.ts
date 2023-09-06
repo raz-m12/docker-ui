@@ -14,7 +14,7 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 export class LoginComponent {
   form: FormGroup;
   returnUrl = "/";
-
+  hide = true;
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -48,8 +48,8 @@ export class LoginComponent {
         next: () => {
           this.router.navigate([this.returnUrl]);
         },
-        error: error => {
-          this.toastrService.error(error);
+        error: err => {
+          this.toastrService.error(err.error.message);
         }
       }
     );

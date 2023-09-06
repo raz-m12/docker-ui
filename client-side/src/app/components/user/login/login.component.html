@@ -1,13 +1,20 @@
-<!-- TODO add responsive design -->
 <div class="login-page">
   <div class="form">
     <form (submit)="login()" [formGroup]="form">
-      <input type="text" placeholder="username" formControlName="username"/>
-      <input type="password" placeholder="password" formControlName="password"/>
+      <mat-form-field>
+        <mat-label>username</mat-label>
+        <input matInput type="text" placeholder="username" formControlName="username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>password</mat-label>
+        <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
       <div class="form-group">
         <button type="submit" [disabled]="form.invalid" class="btn btn-success">Login</button>
       </div>
-      <p class="message">Not registered? <a [routerLink]="['/register']">Create an account</a></p>
+      <p class="message">Already registered? <a [routerLink]="['/register']">Sign In</a></p>
     </form>
   </div>
 </div>
+
