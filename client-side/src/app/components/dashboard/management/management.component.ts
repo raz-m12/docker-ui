@@ -26,6 +26,13 @@ export class ManagementComponent implements OnDestroy {
   }
 
   /**
+   * Signal that an operation is awaiting completion
+   */
+  opPending() {
+    return this.CS.isOperationPending();
+  }
+
+  /**
    * Unsubscribe
    */
   ngOnDestroy(): void {

@@ -11,19 +11,19 @@
   <div class="row justify-content-center">
     <div class="col">
       <div class="button-container d-flex justify-content-center flex-wrap">
-        <button mat-raised-button (click)="build()">
+        <button mat-raised-button (click)="build()" matTooltip="Build or rebuild services">
           <mat-icon>build</mat-icon>
           Build
         </button>
-        <button mat-raised-button (click)="getLogs()">
+        <button mat-raised-button (click)="getLogs()" matTooltip="Show logs of service(s)">
           <mat-icon>event_note</mat-icon>
           Get logs
         </button>
-        <button mat-raised-button (click)="kill()">
+        <button mat-raised-button (click)="kill()" matTooltip="Force stop service containers">
           <mat-icon>power_off</mat-icon>
           Kill
         </button>
-        <button mat-raised-button (click)="stop()">
+        <button mat-raised-button (click)="stop()" matTooltip="Stop running containers without removing them">
           <mat-icon>stop</mat-icon>
           Stop
         </button>
@@ -33,15 +33,17 @@
   <div class="row justify-content-center">
     <div class="col">
       <div class="button-container d-flex justify-content-center flex-wrap">
-        <button mat-raised-button (click)="restart()">
+        <button mat-raised-button (click)="restart()" matTooltip="Restart all services">
           <mat-icon>restart_alt</mat-icon>
           Restart
         </button>
-        <button mat-raised-button (click)="composeDown()">
+        <button mat-raised-button (click)="composeDown()"
+                matTooltip="Stops containers and removes containers, networks, volumes, and images">
           <mat-icon>delete</mat-icon>
           Down
         </button>
-        <button mat-raised-button (click)="composeUp()">
+        <button mat-raised-button (click)="composeUp()"
+                matTooltip="Builds, (re)creates, starts, and attaches to containers for all services">
           <mat-icon>delete</mat-icon>
           Up
         </button>
@@ -57,12 +59,7 @@
 
   <div class="row">
     <div class="col-12">
-      <button mat-raised-button (click)="toggleLogs()" class="fixedWidth float-end">
-        <mat-icon>event_note</mat-icon>
-        Logs
-      </button>
-
-      <button mat-raised-button (click)="goBack()" title="Add" class="fixedWidth float-end">
+      <button mat-raised-button (click)="goBack()" title="Add" class="fixedWidth float-end" [disabled]="opPending()">
         <mat-icon>arrow_back</mat-icon>
         Back
       </button>

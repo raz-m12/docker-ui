@@ -7,6 +7,7 @@ import { TableComponent } from './table/table.component';
 import { ManagementComponent } from './management/management.component';
 import { TableDialogComponent } from './table-dialog/table-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         ReactiveFormsModule,
         ControllerRoutingModule,
         BaseModule.forRoot(),
-        FormsModule
+        FormsModule,
+        MatTooltipModule
     ],
   providers: [ ]
 })

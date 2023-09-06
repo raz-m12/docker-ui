@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class ContainerService {
 
   private _tableData!: ProjectTableElement[];
+  private opPending = false;
 
   // Used for changing the active project
   private activeContainerSubject: ReplaySubject<ProjectTableElement> = new ReplaySubject<ProjectTableElement>();
@@ -19,6 +20,13 @@ export class ContainerService {
     console.log("creating");
   }
 
+  setOperationPending(value: boolean) {
+    this.opPending = value;
+  }
+
+  isOperationPending() {
+    return this.opPending;
+  }
   /**
    * Load all table data by providing cache data if available
    */

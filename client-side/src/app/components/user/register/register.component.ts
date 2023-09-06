@@ -26,9 +26,14 @@ export class RegisterComponent {
   }
   public register() {
     this.userService.register(this.form.value).pipe(first()).subscribe(
-      () => {
-        this.alertService.success("Registration successful");
-        this.router.navigate(["/login"]);
+      {
+        next: () => {
+          this.alertService.success("Registration successful");
+          this.router.navigate(["/login"]);
+        },
+        error: (err) => {
+            this.alertService.error(err.error.message);
+        }
     });
   }
 }
