@@ -11,7 +11,9 @@ import {first} from "rxjs";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  hide = true;
   form: FormGroup;
+  get passwordInput() { return this.form.get('password'); }
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
               private router: Router,

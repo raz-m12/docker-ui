@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import {BaseModule} from "../../base/base.module";
 import {UserService} from "../../base/services/services";
 import { HomeComponent } from '../dashboard/home/home.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -17,7 +18,8 @@ import { HomeComponent } from '../dashboard/home/home.component';
     UserRoutingModule,
     ReactiveFormsModule,
     BaseModule.forRoot(),
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatCardModule
   ],
   providers: [UserService]
 })

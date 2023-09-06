@@ -1,10 +1,20 @@
 <!-- TODO add responsive design -->
-<div class="login-page">
-  <div class="form">
+<div class="login-page2">
+  <div class="form2">
     <form (submit)="register()" [formGroup]="form">
-      <input type="text" placeholder="username" formControlName="username"/>
-      <input type="password" placeholder="password" formControlName="password"/>
-      <input type="text" placeholder="email address" formControlName="email"/>
+      <mat-form-field>
+        <mat-label>username</mat-label>
+        <input matInput placeholder="username" formControlName="username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>password</mat-label>
+        <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>email address</mat-label>
+        <input matInput placeholder="username" formControlName="email" required>
+      </mat-form-field>
       <div class="form-group">
         <button type="submit" [disabled]="form.invalid" class="btn btn-success">Register</button>
       </div>
@@ -12,3 +22,4 @@
     </form>
   </div>
 </div>
+
