@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseModule } from "../../base/base.module";
-import { ControllerRoutingModule } from "./controller-routing.module";
+import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { LoggerComponent } from './logger/logger.component';
 import { TableComponent } from './table/table.component';
 import { ManagementComponent } from './management/management.component';
@@ -19,11 +19,11 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        ControllerRoutingModule,
+        DashboardRoutingModule,
         BaseModule.forRoot(),
         FormsModule,
         MatTooltipModule
     ],
   providers: [ ]
 })
-export class ControllerModule { }
+export class DashboardModule { }

@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {io, Socket} from 'socket.io-client';
 import {Observable} from 'rxjs';
-import {env} from "../../../../environments/environment";
+import {env} from "../../../../config/environment";
 import {SocketIODTO} from "../models/sockerio.interface";
 import {ToastrService} from "ngx-toastr";
 

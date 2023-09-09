@@ -37,4 +37,4 @@ const dashboardRoutes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class ControllerRoutingModule {}
+export class DashboardRoutingModule {}

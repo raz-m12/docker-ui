@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ContainerResult} from "../models/container.interface";
-import {env} from "../../../../environments/environment";
+import {env} from "../../../../config/environment";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";

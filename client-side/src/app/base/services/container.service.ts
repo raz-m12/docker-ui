@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Container, ProjectTableElement, Project} from "../models/container.interface";
 import {Injectable} from "@angular/core";
 import {ToastrService} from "ngx-toastr";
-import {env} from "../../../../environments/environment";
+import {env} from "../../../../config/environment";
 import {Router} from "@angular/router";
 
 @Injectable({ providedIn: "root"})

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {LoginToken, User} from "../models/user.interface";
-import {env} from "../../../../environments/environment";
+import {env} from "../../../../config/environment";
 import {Router} from "@angular/router";
 
 
