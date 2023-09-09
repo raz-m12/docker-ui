@@ -4,7 +4,7 @@ import {ContainerService} from "../../../base/services/container.service"
 import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {SocketService} from "../../../base/services/socket.service";
-import {ContainerManagementService} from "../../../base/services/container-management.service";
+import {OperationsService} from "../../../base/services/operations.service";
 
 @Component({
   selector: 'app-management',
@@ -18,7 +18,7 @@ export class ManagementComponent implements OnDestroy {
   // Unsubscribe
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService, public CM: ContainerManagementService) {
+  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService, public CM: OperationsService) {
     this.project = undefined!;
     this.CS.activeProject().pipe(takeUntil(this.ngUnsubscribe)).subscribe(c => {
       this.project = c

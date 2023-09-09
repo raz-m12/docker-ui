@@ -10,7 +10,7 @@ import {ContainerService} from "./container.service";
 @Injectable({
   providedIn: 'root'
 })
-export class ContainerManagementService {
+export class OperationsService {
 
   constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router, public CS: ContainerService) {
   }
