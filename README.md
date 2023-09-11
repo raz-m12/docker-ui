@@ -24,3 +24,16 @@ Languages and frameworks -> nodeJS -> Node assistance for NodeJS
 # Diagrams
 DrawIO, Figma
 Angular folder structure: [documentation](https://angular-folder-structure.readthedocs.io/en/latest/path-alias.html)
+
+
+# Appunti TODO
+Cari studenti,
+
+in vista degli appelli d'esame, vorremmo darvi qualche consiglio per una presentazione efficace del vostro progetto del corso:
+
+Dividete la presentazione in due parti.
+Nella prima parte esponete chiaramente l'obbiettivo del progetto, i requisiti e la soluzione tecnica proposta. Appoggiarvi a delle slide aiuta voi nel mantenere un filo logico nel discorso e noi nel seguirvi più facilmente.
+Nella seconda parte mostrate una demo della vostra web app.
+Siete alla magistrale, cercate di mantenere un taglio professionale nella presentazione.
+Buon lavoro.
+I docenti.

@@ -1,6 +1,9 @@
 \documentclass[multi, tikz]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{makecell}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{grffile}
 
 %%%%%%%%%%%%%%%%%%%%%%%% FOREST %%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{tikz}
@@ -258,12 +261,16 @@ Introduzione \citep{adams1995hitchhiker}
 \section{Design}
 Design dell'architettura del sistema e delle interfacce utente.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.44]{deathStar2.jpg}
-\caption{Death Star}
-\label{fig:deathstar}
-\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \begin{figure}[h!]                             %%
+%% \centering                                     %%
+%% \includegraphics[scale=0.44]{architecture.tex} %%
+%% \caption{Death Star}                           %%
+%% \label{fig:deathstar}                          %%
+%% \end{figure}                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Technologies}
 In terms of dependencies, the requirements that were considered {\em{non
@@ -427,6 +434,7 @@ Solo aspetti rilevanti.
 \section{Test}
 Test effettuati sul codice e test con utenti.
 
+
 \section{Deployment}
 Rilascio, installazione e messa in funzione.
 \subsection{Docker deployment}
@@ -436,6 +444,15 @@ Rilascio, installazione e messa in funzione.
   \caption{Docker images}
   \label{fig:deathstar}
 \end{figure}
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.70]{src.pdf}
+  \caption{Docker images}
+  \label{fig:deathstar}
+\end{figure}
+
 
 The deployment process was done via Docker. The project used three images for
 

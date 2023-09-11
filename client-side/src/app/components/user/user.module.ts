@@ -8,18 +8,21 @@ import {BaseModule} from "../../base/base.module";
 import {UserService} from "../../base/services/services";
 import { HomeComponent } from '../dashboard/home/home.component';
 import {MatCardModule} from "@angular/material/card";
+import { DocsComponent } from './docs/docs.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, HomeComponent],
+  declarations: [LoginComponent, RegisterComponent, HomeComponent, DocsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
     ReactiveFormsModule,
     BaseModule.forRoot(),
     NgOptimizedImage,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [UserService]
 })

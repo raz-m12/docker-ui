@@ -4,13 +4,13 @@
   <mat-sidenav-container class="app-sidenav-container">
     <mat-sidenav #snav [mode]="'side'" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item (click)="goto(['/'])">Hope page</a>
+        <a mat-list-item (click)="goto(['/'])">Home page</a>
       </mat-nav-list>
       <mat-nav-list>
         <a mat-list-item (click)="goto(['/dashboard/containers'])">Manage containers</a>
       </mat-nav-list>
       <mat-nav-list>
-        <a mat-list-item routerLink="['/controller']">Docs/about</a>
+        <a mat-list-item (click)="goto(['/dashboard/docs'])">Docs/about</a>
       </mat-nav-list>
       <mat-nav-list>
         <a mat-list-item (click)="onLogout()" routerLink="['/user/login']">Logout</a>
@@ -21,11 +21,9 @@
       <div class="db-container">
         <router-outlet></router-outlet>
         <footer>
-          <p>&copy; 2023 Docker GUI</p>
+          <p>&copy; 2023 Docker GUI - Rapid Containers: Elevate Deployment Speed</p>
         </footer>
       </div>
-
-
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

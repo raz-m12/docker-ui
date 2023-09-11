@@ -91,54 +91,68 @@
         <tr>
             <td>1</td>
             <td>Home Page</td>
-            <td>Display a clear and catchy headline that describes our value proposition.<br /> Include a captivating hero image or illustration that resonates with our brand.<br />  Add a login button that guides users to explore further.<br /></td>
+            <td>
+                <span>&#10003;</span> Display a clear and catchy headline that describes our value proposition. <br /> 
+                <span>&#10003;</span> Include a captivating hero image or illustration that resonates with our brand. <br /> 
+                <span>&#10003;</span> Add a login button that guides users to explore further. <br />
+            </td>
         </tr>
         <tr>
             <td>2</td>
             <td>Documentation Page</td>
-            <td>Setup and host documentation pages via Github Pages.<br />  Organize the documentation in an easily understandable format.<br />  Provide comprehensive information on how the website is organized.<br /></td>
+            <td>
+                <span>&#10006;</span> Setup and host documentation pages via Github Pages.<br />  
+                <span>&#10003;</span> Organize the documentation in an easily understandable format.<br />  
+                <span>&#10006;</span> Provide comprehensive information on how the website is organized.<br /></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Login/Signup Page</td>
             <td>
-                3.1. Offer a clear login form with fields for id and password.<br />  
-                3.2. Offer a clear registration page with fields for id, password and email.<br />
-                3.3. Allow users to sign up using social media accounts for convenience.<br />  
-                3.4. Provide password recovery options and ensure a secure login process.<br />
+                <span>&#10003;</span> 3.1. Offer a clear login form with fields for id and password.<br />  
+                <span>&#10003;</span> 3.2. Offer a clear registration page with fields for id, password and email.<br />
+                <span>&#10006;</span> 3.3. Allow users to sign up using social media accounts for convenience.<br />  
+                <span>&#10006;</span> 3.4. Provide password recovery options and ensure a secure login process.<br />
             </td>
         </tr>
         <tr>
             <td>4.1</td>
             <td>Dashboard design</td>
             <td>
-                4.1.1. Design a clean and organized dashboard layout using Figma (see(<br /> 
-                4.1.2. Display account information and settings through intuitive and easy to use icons and widgets.<br />
-                4.1.3. Ensure easy navigation between different sections or features.<br />
+                <span>&#10003;</span> 4.1.1. Design a clean and organized dashboard layout using Figma (see <a href="https://www.figma.com/file/TGgkRNt5faxYmILkp60JdN/Docker-UI?type=design&node-id=0-1&mode=design&t=xiOtfV9o8wuu5GF8-0">link</a>)<br /> 
+                <span>&#10006;</span> 4.1.2. Display account information and settings through intuitive and easy to use icons and widgets.<br />
+                <span>&#10003;</span> 4.1.3. Ensure easy navigation between different sections or features.<br />
             </td>
         </tr>
         <tr>
             <td>4.2</td>
             <td>Dashboard Functionaity</td>
             <td>
-                4.2.1. buildAll(path) - Used to build all services given a Docker Compose file<br /> 
-                4.2.2. logs(services, path) uses configServices(path) - Show logs of service(s)<br /> 
-                4.2.3. kill(path) - Force stop service containers<br /> 
-                4.2.4. stop(path) - Stop running containers without removing them<br /> 
-                4.2.5. start or restartAll(path) - Restart all services<br /> 
-                4.2.6. upAll(path) - Build, (re)creates, starts, and attaches to containers for all services <br />
-                4.2.7. down(path) - Stops containers and removes containers, networks, volumes, and images created by up<br />
+                <span>&#10003;</span> 4.2.1. buildAll(path) - Used to build all services given a Docker Compose file<br /> 
+                <span>&#10003;</span> 4.2.2. logs(services, path) uses configServices(path) - Show logs of service(s)<br /> 
+                <span>&#10003;</span> 4.2.3. kill(path) - Force stop service containers<br /> 
+                <span>&#10003;</span> 4.2.4. stop(path) - Stop running containers without removing them<br /> 
+                <span>&#10003;</span> 4.2.5. start or restartAll(path) - Restart all services<br /> 
+                <span>&#10003;</span> 4.2.6. upAll(path) - Build, (re)creates, starts, and attaches to containers for all services <br />
+                <span>&#10003;</span> 4.2.7. down(path) - Stops containers and removes containers, networks, volumes, and images created by up<br />
             </td>
         </tr>
         <tr>
             <td>5</td>
             <td>Logger&#39;s Page</td>
-            <td>Redirect container logging messages to the browser to easily read them.<br /> Create an intuitive interface that allows users to easily navigate across the available features.<br />  Decide on the technologies necessary to setup the real time interaction between the client and server.<br /></td>
+            <td>
+                <span>&#10003;</span> Redirect container logging messages to the browser to easily read them.<br /> 
+                <span>&#10003;</span> Create an intuitive interface that allows users to easily navigate across the available features.<br /> 
+                <span>&#10003;</span> Decide on the technologies necessary to setup the real time interaction between the client and server.<br />
+            </td>
         </tr>
         <tr>
             <td>6</td>
             <td>Docker Hub</td>
-            <td>Gain the technical expertise needed to setup a Docker Hub release through existing examples.<br /> Setup dependent containers that need to be installed along-side Docker-UI.<br />  Exhaustive tests on multiple machines to ensure that the release works consistently across different OSes.<br /></td>
+            <td>
+                <span>&#10003;</span> Gain the technical expertise needed to setup a Docker Hub release through existing examples.<br /> 
+                <span>&#10003;</span> Setup dependent containers that need to be installed along-side Docker-UI.<br /> 
+                <span>&#10003;</span> Exhaustive tests on multiple machines to ensure that the release works consistently across different OSes.<br /></td>
         </tr>
     </tbody>
 </table>

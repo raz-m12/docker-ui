@@ -6,6 +6,7 @@ import {ManagementComponent} from "./management/management.component";
 import {TableComponent} from "./table/table.component";
 import {ProjectSelectedGuard} from "../../base/guards/project-selected.guard";
 import {HomeComponent} from "./home/home.component";
+import {DocsComponent} from "../user/docs/docs.component";
 
 const dashboardRoutes: Routes = [
   {
@@ -13,6 +14,7 @@ const dashboardRoutes: Routes = [
     component: DashboardComponent,
     canActivateChild: [],
     children: [
+      { path: 'docs', component: DocsComponent},
       {
         path: "",
         component: HomeComponent

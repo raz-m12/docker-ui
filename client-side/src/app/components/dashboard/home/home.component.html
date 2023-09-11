@@ -1,19 +1,66 @@
 <div class="container">
-  <header>
-    <h1>Welcome to DockerHub</h1>
-  </header>
-  <main>
-    <section class="featured">
-      <h2>Featured Images</h2>
-      <img ngSrc="../../../assets/icons/docker-logo.webp" alt="Docker Icon" height="150" width="260">
-    </section>
-    <section class="about">
-      <h2>About Docker</h2>
-      <p>
-        Docker is a platform for developing, shipping, and running applications in containers. It provides an
-        efficient way to package and distribute software.
-      </p>
-    </section>
-  </main>
+  <h2 class="align">Site map</h2>
+  <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)">
+    <mat-grid-tile>
+      <a (click)="goto(['/dashboard/containers'])">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>Container management</mat-card-title>
+              <mat-card-subtitle>Perform operations on the configured projects such as building and running an image.</mat-card-subtitle>
+              <div class="flex-container">
+                <img class="item" ngSrc="../../../assets/icons/container-management.png" alt="Docker Icon" height="79" width="152">
+              </div>
+            </mat-card-title-group>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <a (click)="goto(['/dashboard/docs'])">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>Documentation</mat-card-title>
+              <mat-card-subtitle>Learn more about Docker and why a web interface is useful.</mat-card-subtitle>
+              <div class="flex-container">
+                <img class="item" ngSrc="../../../assets/icons/documentation.png" alt="Docker Icon" height="79" width="152">
+              </div>
+            </mat-card-title-group>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <a href="https://hub.docker.com/repository/docker/razvanfv/docker-ui/general" target="_blank">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>Docker Hub</mat-card-title>
+              <mat-card-subtitle>Check out the deployment images hosted on Docker Hub.</mat-card-subtitle>
+              <div class="flex-container">
+                <img class="item" ngSrc="../../../assets/icons/docker-learn-more.webp" alt="Docker Icon" height="52" width="152">
+              </div>
+            </mat-card-title-group>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <a href="https://github.com/raz-m12/docker-ui" target="_blank">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>Learn more</mat-card-title>
+              <mat-card-subtitle>Visit project's homepage on Github to learn how to get started.</mat-card-subtitle>
+              <div class="flex-container">
+                <img class="item" ngSrc="../../../assets/icons/GitHub-logo.jpg" priority alt="Docker Icon" height="88" width="152">
+              </div>
+            </mat-card-title-group>
+          </mat-card-header>
+        </mat-card>
+      </a>
+    </mat-grid-tile>
 
+  </mat-grid-list>
 </div>

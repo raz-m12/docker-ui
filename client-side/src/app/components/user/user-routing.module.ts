@@ -5,6 +5,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {BaseModule} from "../../base/base.module";
 import {DashboardComponent} from "../../base/dashboard/dashboard.component";
+import {DocsComponent} from "./docs/docs.component";
 
 const routes: Routes = [
   {
