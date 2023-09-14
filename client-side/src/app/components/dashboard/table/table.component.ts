@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -14,7 +14,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TableComponent implements AfterViewInit, OnDestroy {
   // Grid variables
   displayedColumns: string[] = ['name','projectName', 'status', 'action', ];
   dataToDisplay: ProjectTableElement[] = [];
@@ -30,7 +30,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Unsubscription
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public dialog: MatDialog, public CS: ContainerService, public toastr: ToastrService) {
+  constructor(public dialog: MatDialog, public CS: ContainerService, public toastr: ToastrService, private cd: ChangeDetectorRef) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
@@ -45,8 +45,10 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadProjects() {
     this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
-      this.dataStream.data = [...projects];
       this.isLoading = false;
+      this.cd.detectChanges();
+      this.dataStream.data = projects;
+      this.cd.detectChanges();
     });
   }
 
@@ -60,18 +62,12 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Load-up projects
-   */
-  ngOnInit(): void {
-    this.loadProjects();
-  }
-
-  /**
    * Set up pagination and sorting
    */
   ngAfterViewInit() {
     this.dataStream.paginator = this.paginator;
     this.dataStream.sort = this.sort;
+    this.loadProjects();
   }
 
   /**

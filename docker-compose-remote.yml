@@ -47,7 +47,7 @@ services:
     image: razvanfv/docker-ui:client
     container_name: docker-ui-client
     volumes:
-      - ./client-side:/app/client-side
+      # - ./client-side:/app/client-side
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "4200:4200" # specify port forewarding

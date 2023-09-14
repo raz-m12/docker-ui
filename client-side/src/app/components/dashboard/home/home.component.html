@@ -1,5 +1,7 @@
 <div class="container">
-  <h2 class="align bold">Site Map</h2>
+  <header>
+    <h1 class="align">Site Map</h1>
+  </header>
   <mat-grid-list [cols]="breakpoint" rowHeight="2:1" (window:resize)="onResize($event)">
     <mat-grid-tile>
       <a (click)="goto(['/dashboard/containers'])">
