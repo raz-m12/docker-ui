@@ -3,9 +3,6 @@ import Project from '../models/project.model.js';
 import env from '../config/environment.js';
 import fs from 'fs';
 import path from 'path';
-import {fileURLToPath} from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 /**
  * Public function used to load all docker-projects
@@ -40,9 +37,11 @@ function findComposeFiles(dirPath, recursive, result = []) {
       const dir = parts[parts.length - 2];
 
       // Use String.replace() to enforce the pattern
-      const id = dir.replace(/[^a-z0-9-_]+/g, "").replace(/^[_-]+/, "");
-      const item = new Project(id, path.dirname(filePath),
-          path.join(__dirname, filePath, id), fs.readFileSync(filePath, 'utf-8')
+      const id = dir.replace(/[^a-z0-9-_]+/g, '').replace(/^[_-]+/, '');
+      const composeDir = path.dirname(filePath);
+      const item = new Project(id, composeDir,
+          path.relative(env.projectsPath, composeDir),
+          fs.readFileSync(filePath, 'utf-8'),
       );
       result.push(item);
     }

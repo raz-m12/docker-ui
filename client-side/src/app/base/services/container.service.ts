@@ -37,6 +37,7 @@ export class ContainerService {
     return this.httpClient
       .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
+        this.toastr.success("Projects loaded successfully");
         this.needsRefresh = false;
         this._tableData = data.projects.map(this.getTableData(data.containers));
         return this._tableData!;
@@ -47,7 +48,8 @@ export class ContainerService {
     return (p: Project, i: number): ProjectTableElement => {
       return {
         name: p.id,
-        path: p.path,
+        composeDir: p.composeDir,
+        projectName: p.projectName,
         yaml: p.yaml,
         status: this.isActive(i, containers),
         id: p.id

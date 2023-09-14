@@ -9,13 +9,13 @@ class Project {
    * that contains the project
    * @param {string} composeDir path to the folder that contains the
    * compose file
-   * @param {string} composePath path to the compose file
+   * @param {string} projectName name of the project
    * @param {string} yaml contents of the compose file
    */
-  constructor(id, composeDir, composePath, yaml) {
+  constructor(id, composeDir, projectName, yaml) {
     this.id = id;
     this.composeDir = composeDir;
-    this.composePath = composePath;
+    this.projectName = projectName;
     this.yaml = yaml;
   }
 }

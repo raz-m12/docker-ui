@@ -7,6 +7,7 @@ import {TableDialogComponent} from "../table-dialog/table-dialog.component";
 import {ProjectTableElement} from "../../../base/models/container.interface"
 import { ContainerService } from "../../../base/services/services";
 import {Subject, takeUntil} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-table',
@@ -15,7 +16,7 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Grid variables
-  displayedColumns: string[] = ['name', 'status', 'action'];
+  displayedColumns: string[] = ['name','projectName', 'status', 'action', ];
   dataToDisplay: ProjectTableElement[] = [];
   dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
@@ -28,9 +29,24 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Unsubscription
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public dialog: MatDialog, public CS: ContainerService) {
+  constructor(public dialog: MatDialog, public CS: ContainerService, public toastr: ToastrService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
+  }
+
+  /**
+   * Refresh table
+   */
+  refresh() {
+    this.CS.refreshProjects();
+    this.loadProjects();
+  }
+
+  private loadProjects() {
+    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
+      this.dataStream.data = [...projects];
+      this.isLoading = false;
+    });
   }
 
   /**
@@ -46,10 +62,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
    * Load-up projects
    */
   ngOnInit(): void {
-    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
-      this.dataStream.data = [...projects];
-      this.isLoading = false;
-    });
+    this.loadProjects();
   }
 
   /**
@@ -69,7 +82,8 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedRowIndex = "";
     else
       this.selectedRowIndex = row.id;
-
+  }
+  goto() {
     const selected = this.dataStream.data.find(c => c.id === this.selectedRowIndex)!;
     this.CS.nextProject(selected);
     this.CS.goToConfigPage(selected);

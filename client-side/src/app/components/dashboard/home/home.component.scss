@@ -22,7 +22,7 @@
 }
 .item {
   width: 152px;
-  margin-left: 0px;
+  margin-left: 0;
 
   background: #b4bac0;
 }
@@ -32,3 +32,6 @@ a {
   text-decoration: none;
 }
 
+.bold {
+  font-weight: bold;
+}

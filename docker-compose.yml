@@ -13,6 +13,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - ./server-side/docker-projects:/opt/docker-projects
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - SECRET=Thisismysecret

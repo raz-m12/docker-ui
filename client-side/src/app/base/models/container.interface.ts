@@ -4,7 +4,8 @@ export interface ProjectTableElement {
   name: string;
   status: boolean;
   action?: string;
-  path: string;
+  composeDir: string;
+  projectName: string;
   yaml?: string;
 }
 
@@ -28,7 +29,9 @@ interface Labels {
 
 export interface Project {
   id: string;
-  path: string;
+  composePath: string;
+  composeDir: string;
+  projectName: string;
   yaml: string;
   isActive: (cs: Container[]) => boolean;
 }
