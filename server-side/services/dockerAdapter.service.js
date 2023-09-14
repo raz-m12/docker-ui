@@ -1,6 +1,7 @@
 import compose from 'docker-compose';
 import * as socketIO from './socketio.service.js';
 import {REPLY_LOG} from './socketio.service.js';
+import stripAnsi from 'strip-ansi';
 
 /**
  * Force stop service containers
@@ -14,7 +15,9 @@ export function killContainers(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -35,7 +38,9 @@ export function stopContainers(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -56,7 +61,9 @@ export function restartContainers(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -77,7 +84,9 @@ export function composeUp(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -98,7 +107,9 @@ export function composeDown(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -116,7 +127,9 @@ export function composeDown(project, log) {
  */
 export function psProjects(sources) {
   const promises = sources.map(
-      (src) => psProject({cwd: src.composeDir, log: true, composeOptions: [["-p", src.id]]}));
+      (src) => psProject(
+          {cwd: src.composeDir, log: true, composeOptions: [['-p', src.id]]},
+      ));
 
   return Promise.all(promises);
 }
@@ -148,7 +161,9 @@ export function buildImage(project, log) {
         cwd: project.composeDir + '/app',
         callback: (msg, src) => {
           if (log) {
-            socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+            socketIO.pipe(REPLY_LOG, {
+              buffer: stripAnsi(msg.toString()), src: src,
+            });
           }
           console.log('Error: ' + msg);
           console.log('Data: ' + src);
@@ -169,7 +184,9 @@ export function getLogs(project, log) {
       cwd: project.composeDir + '/app',
       callback: (msg, src) => {
         if (log) {
-          socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+          socketIO.pipe(REPLY_LOG, {
+            buffer: stripAnsi(msg.toString()), src: src,
+          });
         }
         console.log('Error: ' + msg);
         console.log('Data: ' + src);
@@ -190,7 +207,9 @@ function getServices(project, log) {
     cwd: project.composeDir + '/app',
     callback: (msg, src) => {
       if (log) {
-        socketIO.pipe(REPLY_LOG, {buffer: msg, src: src});
+        socketIO.pipe(REPLY_LOG, {
+          buffer: stripAnsi(msg.toString()), src: src,
+        });
       }
       console.log('Error: ' + msg);
       console.log('Data: ' + src);

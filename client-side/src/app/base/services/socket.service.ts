@@ -10,7 +10,6 @@ import {ToastrService} from "ngx-toastr";
 })
 export class SocketService implements OnDestroy {
   private socket: Socket;
-  private textDecoder = new TextDecoder();
 
   constructor(public toastr: ToastrService) {
     this.socket = io(env.serverEndpoint);
@@ -49,7 +48,9 @@ export class SocketService implements OnDestroy {
   onEvent(eventName: string): Observable<string> {
     return new Observable(observer => {
       this.socket.on(eventName, (data: SocketIODTO) => {
-        observer.next(this.textDecoder.decode(data.buffer));
+        console.log(data);
+        //observer.next(this.textDecoder.decode(data.buffer));
+        observer.next(data.buffer);
       });
     });
   }

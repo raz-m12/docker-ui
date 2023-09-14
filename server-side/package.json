@@ -18,7 +18,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.4.3",
     "morgan": "~1.9.1",
-    "socket.io": "^4.7.2"
+    "socket.io": "^4.7.2",
+    "strip-ansi": "^7.1.0"
   },
   "devDependencies": {
     "docker-compose": "^0.24.2",

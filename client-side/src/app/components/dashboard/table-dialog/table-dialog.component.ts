@@ -23,7 +23,7 @@ export class TableDialogComponent {
     this.model = {...data};
     this.action = data.action;
     this.form = this.formBuilder.group({
-      name: [data.name, Validators.required],
+      name: new FormControl({ value: data.name, disabled: true }, [Validators.required]),
       yaml: new FormControl({ value: data.yaml, disabled: true}, [Validators.required])
     });
 

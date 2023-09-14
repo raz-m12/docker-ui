@@ -1,5 +1,5 @@
 export interface SocketIODTO {
-  buffer: ArrayBuffer,
+  buffer: string,
   src: "stderr" | "stdout"
 }
 
