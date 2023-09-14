@@ -22,6 +22,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedRowIndex = "";
   isLoading = true;
 
+
   // Pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
