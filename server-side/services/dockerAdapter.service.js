@@ -12,15 +12,14 @@ import stripAnsi from 'strip-ansi';
 export function killContainers(project, log) {
   return compose.kill(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -35,15 +34,14 @@ export function killContainers(project, log) {
 export function stopContainers(project, log) {
   return compose.stop(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -58,15 +56,14 @@ export function stopContainers(project, log) {
 export function restartContainers(project, log) {
   return compose.restartAll(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -81,15 +78,14 @@ export function restartContainers(project, log) {
 export function composeUp(project, log) {
   return compose.upAll(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -104,15 +100,14 @@ export function composeUp(project, log) {
 export function composeDown(project, log) {
   return compose.down(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -158,15 +153,14 @@ function psProject(opts) {
 export function buildImage(project, log) {
   return compose.buildAll(
       {
-        cwd: project.composeDir + '/app',
+        cwd: project.composeDir,
         callback: (msg, src) => {
           if (log) {
             socketIO.pipe(REPLY_LOG, {
               buffer: stripAnsi(msg.toString()), src: src,
             });
           }
-          console.log('Error: ' + msg);
-          console.log('Data: ' + src);
+          print(msg, src);
         },
         log: log,
       });
@@ -181,15 +175,14 @@ export function buildImage(project, log) {
 export function getLogs(project, log) {
   return getServices(project, log).then((services) => {
     return compose.logs(services.data.services, {
-      cwd: project.composeDir + '/app',
+      cwd: project.composeDir,
       callback: (msg, src) => {
         if (log) {
           socketIO.pipe(REPLY_LOG, {
             buffer: stripAnsi(msg.toString()), src: src,
           });
         }
-        console.log('Error: ' + msg);
-        console.log('Data: ' + src);
+        print(msg, src);
       },
       log: log,
     });
@@ -204,16 +197,24 @@ export function getLogs(project, log) {
  */
 function getServices(project, log) {
   return compose.configServices({
-    cwd: project.composeDir + '/app',
+    cwd: project.composeDir,
     callback: (msg, src) => {
       if (log) {
         socketIO.pipe(REPLY_LOG, {
           buffer: stripAnsi(msg.toString()), src: src,
         });
       }
-      console.log('Error: ' + msg);
-      console.log('Data: ' + src);
+      print(msg, src);
     },
     log: log,
   });
+}
+
+/**
+ * Utility function, used to print output on the cmd line as well.
+ * @param {Buffer} msg logger message
+ * @param {string} src stdout, stdin
+ */
+function print(msg, src) {
+  console.log(msg.toString());
 }

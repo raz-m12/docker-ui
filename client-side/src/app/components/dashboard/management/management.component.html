@@ -39,12 +39,17 @@
         </button>
         <button mat-raised-button (click)="composeDown()"
                 matTooltip="Stops containers and removes containers, networks, volumes, and images">
-          <mat-icon>delete</mat-icon>
+          <mat-icon>stop_circle_outline</mat-icon>
           Down
+        </button>
+        <button mat-raised-button (click)="openDialog('Read')"
+                matTooltip="Read the compose file">
+          <mat-icon>remove_red_eye</mat-icon>
+          View
         </button>
         <button mat-raised-button (click)="composeUp()"
                 matTooltip="Builds, (re)creates, starts, and attaches to containers for all services">
-          <mat-icon>delete</mat-icon>
+          <mat-icon>play_circle_outline</mat-icon>
           Up
         </button>
       </div>

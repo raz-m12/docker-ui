@@ -1,0 +1,1 @@
+The examples were taken from [this GitHub project](https://github.com/docker/awesome-compose).

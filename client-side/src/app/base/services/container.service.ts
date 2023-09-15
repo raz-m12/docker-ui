@@ -30,14 +30,15 @@ export class ContainerService {
   /**
    * Load all table data by providing cache data if available
    */
-  loadProjectsWithCache(): Observable<ProjectTableElement[]> {
+  loadProjectsWithCache(showNotification: boolean): Observable<ProjectTableElement[]> {
     if(!this.needsRefresh)
       return of(this._tableData!);
 
     return this.httpClient
       .get<{ projects: Project[], containers: Container[] }>(env.serverEndpoint + "projects", )
       .pipe(map(data => {
-        this.toastr.success("Projects loaded successfully");
+        if(showNotification)
+          this.toastr.success("Projects loaded successfully");
         this.needsRefresh = false;
         this._tableData = data.projects.map(this.getTableData(data.containers));
         return this._tableData!;
@@ -80,6 +81,10 @@ export class ContainerService {
     return this.activeContainerSubject;
   }
 
+  /**
+   * Navigate to the configuration page
+   * @param selected to append as parameter
+   */
   goToConfigPage(selected: ProjectTableElement) {
     this.router.navigate(['/dashboard/containers', selected.id]);
   }
@@ -110,7 +115,7 @@ export class ContainerService {
   httpProjectExists(id: string): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       // Simulate an asynchronous authentication check
-      this.loadProjectsWithCache().pipe(first()).subscribe(() => {
+      this.loadProjectsWithCache(true).pipe(first()).subscribe(() => {
         resolve(this.existsProject(id));
       });
     });

@@ -31,10 +31,11 @@ function findComposeFiles(dirPath, recursive, result = []) {
 
     if (stats.isDirectory() && recursive) {
       findComposeFiles(filePath, false, result); // Search subdirectory
-    } else if (stats.isFile() && file === 'docker-compose.yml' ||
-               file === 'docker-compose.yaml') {
+    } else if (stats.isFile() &&
+        file === 'docker-compose.yml' || file === 'docker-compose.yaml' ||
+        file === 'compose.yaml' || file === 'compose.yml') {
       const parts = filePath.split('/');
-      const dir = parts[parts.length - 2];
+      const dir = parts[parts.length - 2].toLowerCase();
 
       // Use String.replace() to enforce the pattern
       const id = dir.replace(/[^a-z0-9-_]+/g, '').replace(/^[_-]+/, '');

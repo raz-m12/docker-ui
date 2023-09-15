@@ -69,8 +69,20 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
             <td mat-cell *matCellDef="let row">
-              <mat-icon (click)="openDialog('Read',row)" matTooltip="Check docker compose file">remove_red_eye
-              </mat-icon>
+              <div class="parent">
+                <mat-icon class="clickable-icon" (click)="openDialog('Read',row)" matTooltip="Check docker compose file">remove_red_eye
+                </mat-icon>
+                <mat-icon class="clickable-icon" (click)="composeUp(row)"
+                          matTooltip="Run docker-compose up">
+                  play_circle_outline
+                </mat-icon>
+                <mat-icon class="clickable-icon" (click)="composeDown(row)"
+                          matTooltip="Run docker-compose down">
+                  stop_circle_outline
+                </mat-icon>
+
+                <mat-spinner [diameter]="20" *ngIf="showLoading(row)"></mat-spinner>
+              </div>
               <!-- <mat-icon (click)="openDialog('Delete',row)" title="Delete">delete</mat-icon> -->
             </td>
           </ng-container>

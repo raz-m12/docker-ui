@@ -1,13 +1,21 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {TableDialogComponent} from "../table-dialog/table-dialog.component";
 import {ProjectTableElement} from "../../../base/models/container.interface"
-import { ContainerService } from "../../../base/services/services";
+import {ContainerService} from "../../../base/services/services";
 import {Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {OperationsService} from "../../../base/services/operations.service";
 
 @Component({
   selector: 'app-table',
@@ -21,6 +29,9 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
   isLoading = true;
+  iconClicked = false;
+  loading = false;
+  loadingRow: ProjectTableElement | null = null;
 
 
   // Pagination and sorting
@@ -30,7 +41,8 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   // Unsubscription
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public dialog: MatDialog, public CS: ContainerService, public toastr: ToastrService, private cd: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog, public CS: ContainerService, public toastr: ToastrService,
+              private cd: ChangeDetectorRef, private CM: OperationsService) {
     // Assign the data to the data source for the table to render
     this.dataStream = new MatTableDataSource(this.dataToDisplay);
   }
@@ -38,17 +50,16 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   /**
    * Refresh table
    */
-  refresh() {
+  refresh(showNotification = true) {
     this.CS.refreshProjects();
-    this.loadProjects();
+    this.loadProjects(showNotification);
   }
 
-  private loadProjects() {
-    this.CS.loadProjectsWithCache().pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
+  private loadProjects(showNotification = true) {
+    this.CS.loadProjectsWithCache(showNotification).pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
       this.isLoading = false;
       this.cd.detectChanges();
       this.dataStream.data = projects;
-      this.cd.detectChanges();
     });
   }
 
@@ -75,6 +86,10 @@ export class TableComponent implements AfterViewInit, OnDestroy {
    * @param row that was selected
    */
   highlight(row: ProjectTableElement){
+    if(this.iconClicked) {
+      this.iconClicked = false;
+      return;
+    }
     if(row.id === this.selectedRowIndex)
       this.selectedRowIndex = "";
     else
@@ -92,6 +107,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
    * @param obj potential selected item
    */
   openDialog(action: string, obj: ProjectTableElement | null) {
+    this.iconClicked = true;
     let newElem = null;
     if(obj != null)
       obj.action = action;
@@ -101,8 +117,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
 
     const dialogRef = this.dialog.open(TableDialogComponent, {
       width: '600px',
-      data: obj ? obj: newElem,
-      disableClose: true
+      data: obj ? obj: newElem
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -113,6 +128,35 @@ export class TableComponent implements AfterViewInit, OnDestroy {
       }else if(result.event == 'Delete'){
         this.delete(result.data);
       }
+    });
+  }
+
+  showLoading(row: ProjectTableElement) {
+    return row.id === this.loadingRow?.id;
+  }
+  /**
+   * Convenient function for removing an image.
+   * @param row the clicked element
+   */
+  composeDown(row: ProjectTableElement) {
+    this.loadingRow = row;
+    this.setLoading(true);
+    this.CM.composeDown(row.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
+      this.setLoading(false);
+      this.refresh(false);
+    });
+  }
+
+  /**
+   * Convenient function for loading and running an image.
+   * @param row the clicked element
+   */
+  composeUp(row: ProjectTableElement) {
+    this.loadingRow = row;
+    this.setLoading(true);
+    this.CM.composeUp(row.id!).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
+      this.setLoading(false);
+      this.refresh(false);
     });
   }
 
@@ -169,5 +213,13 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     if (this.dataStream.paginator) {
       this.dataStream.paginator.firstPage();
     }
+  }
+
+  setLoading(yes: boolean) {
+    if(!yes) {
+      this.loadingRow = null;
+    }
+    this.loading = yes;
+    this.iconClicked = yes;
   }
 }

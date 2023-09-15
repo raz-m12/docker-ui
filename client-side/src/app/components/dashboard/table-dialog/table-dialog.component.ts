@@ -41,7 +41,7 @@ export class TableDialogComponent {
     this.dialogRef.close({event:'Cancel'});
   }
 
-  disableNameTextbox() {
+  disableNameTextBox() {
     return this.form.value.name.trim().length === 0;
   }
 

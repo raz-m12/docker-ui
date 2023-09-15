@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {SocketService} from "../../../base/services/socket.service";
 import {OperationsService} from "../../../base/services/operations.service";
+import {TableDialogComponent} from "../table-dialog/table-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-management',
@@ -18,7 +20,8 @@ export class ManagementComponent implements OnDestroy {
   // Unsubscribe
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService, public CM: OperationsService) {
+  constructor(public CS: ContainerService, public router: Router, public socketService: SocketService,
+              public CM: OperationsService, private dialog: MatDialog,) {
     this.project = undefined!;
     this.CS.activeProject().pipe(takeUntil(this.ngUnsubscribe)).subscribe(c => {
       this.project = c
@@ -76,4 +79,12 @@ export class ManagementComponent implements OnDestroy {
     this.router.navigate(["/dashboard/containers"]);
   }
 
+  openDialog(action: string) {
+    this.project.action = action;
+
+    const dialogRef = this.dialog.open(TableDialogComponent, {
+      width: '600px',
+      data: this.project
+    });
+  }
 }
