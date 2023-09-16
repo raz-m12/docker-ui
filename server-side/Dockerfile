@@ -1,7 +1,10 @@
 FROM node:20-alpine
 
 # COPY --from=library/docker:latest /usr/local/bin/docker /usr/bin/docker
-COPY --from=docker/compose:latest /usr/local/bin/docker-compose /usr/bin/docker-compose
+COPY --from=docker/compose-bin:v2.20.3 /docker-compose /usr/bin/docker-compose
+# COPY --from=gloursdocker/docker / /
+# COPY --from=docker:24.0.6 /docker /usr/bin/docker
+# apk --no-cache add docker
 
 # COPY ./server-side/package.json /app/package.json
 # COPY ./server-side/package-lock.json /app/package-lock.json

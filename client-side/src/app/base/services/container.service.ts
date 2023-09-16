@@ -64,7 +64,8 @@ export class ContainerService {
    * @param containers active/passive containers fetched via docker-compose ps
    */
   private isActive(position: number, containers: Container[]) {
-    return containers[position].out.indexOf("Up") >= 0;
+    const elements = containers[position].out.split(/\r?\n/).slice(1,-1);
+    return elements.length > 0 && elements.every(line => line.indexOf("Up") >= 0);
   }
   /**
    * Broadcasts the container to all listeners

@@ -6,15 +6,14 @@ services:
     build:
       context: ./server-side
       dockerfile: Dockerfile
-    # image: "user/test:v1.0"
     container_name: docker-ui-server
     hostname: docker_compose
     working_dir: /opt/docker-projects/
     ports:
       - "3000:3000"
     volumes:
-      - ./server-side/docker-projects:/opt/docker-projects
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./server-side/docker-projects:/opt/docker-projects
     environment:
       - SECRET=Thisismysecret
       - NODE_ENV=development
