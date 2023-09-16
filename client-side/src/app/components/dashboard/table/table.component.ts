@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnDestroy,
@@ -28,9 +27,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   dataToDisplay: ProjectTableElement[] = [];
   dataStream: MatTableDataSource<ProjectTableElement>;
   selectedRowIndex = "";
-  isLoading = true;
   iconClicked = false;
-  loading = false;
   loadingRow: ProjectTableElement | null = null;
 
 
@@ -57,7 +54,6 @@ export class TableComponent implements AfterViewInit, OnDestroy {
 
   private loadProjects(showNotification = true) {
     this.CS.loadProjectsWithCache(showNotification).pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
-      this.isLoading = false;
       this.cd.detectChanges();
       this.dataStream.data = projects;
     });
@@ -70,6 +66,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     // unsubscribe to all observables.
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.CS.setOperationPending(false);
   }
 
   /**
@@ -215,11 +212,15 @@ export class TableComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  /**
+   * Show/Hide loading icons
+   * @param yes show/hide them
+   */
   setLoading(yes: boolean) {
     if(!yes) {
       this.loadingRow = null;
     }
-    this.loading = yes;
+    this.CS.setOperationPending(yes);
     this.iconClicked = yes;
   }
 }

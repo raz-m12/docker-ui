@@ -5,6 +5,10 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/docs/report/diagrams" />
+      <excludeFolder url="file://$MODULE_DIR$/mongo/db" />
+      <excludeFolder url="file://$MODULE_DIR$/server-side/docker-projects/react-express-mongodb/backend/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/server-side/docker-projects/react-express-mongodb/data" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

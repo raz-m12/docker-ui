@@ -1,9 +1,9 @@
 #!/bin/bash
 
 systemctl stop mongodb
+# Uncomment if not logged in (launching for the first time)
+# docker login -u razfv07@gmail.com
 
-rm -rf server-side/node_modules
-rm -rf client-side/node_modules
 docker build -t docker-ui-server server-side/
 docker tag docker-ui-server:latest razvanfv/docker-ui:server
 docker push razvanfv/docker-ui:server

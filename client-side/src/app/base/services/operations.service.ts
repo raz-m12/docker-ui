@@ -15,7 +15,13 @@ export class OperationsService {
   constructor(public httpClient: HttpClient, public toastr: ToastrService, public router: Router, public CS: ContainerService) {
   }
 
-  callback(cmd: string, refresh = false) {
+  /**
+   * Utility function reused across operations to manage notifications.
+   * @param cmd the command that was used (i.e. docker-compose up)
+   * @param refresh whether the table will reissue a call to reload projects.
+   * @private body of the function
+   */
+  private callback(cmd: string, refresh = false) {
     return (data: ContainerResult) => {
       if (data.success) {
         this.toastr.success(`${cmd}: success`);
@@ -78,6 +84,7 @@ export class OperationsService {
    * @param id of project
    */
   composeUp(id: string) {
+    this.CS.refreshProjects();
     this.CS.setOperationPending(true);
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeUp",  {
       id: id
@@ -89,6 +96,7 @@ export class OperationsService {
    * @param id of project
    */
   composeDown(id: string) {
+    this.CS.refreshProjects();
     this.CS.setOperationPending(true);
     return this.httpClient.post<ContainerResult>(env.serverEndpoint + "composeDown",  {
       id: id

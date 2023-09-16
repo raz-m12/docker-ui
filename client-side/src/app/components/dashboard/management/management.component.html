@@ -37,6 +37,11 @@
           <mat-icon>restart_alt</mat-icon>
           Restart
         </button>
+        <button mat-raised-button (click)="composeUp()"
+                matTooltip="Builds, (re)creates, starts, and attaches to containers for all services">
+          <mat-icon>play_circle_outline</mat-icon>
+          Up
+        </button>
         <button mat-raised-button (click)="composeDown()"
                 matTooltip="Stops containers and removes containers, networks, volumes, and images">
           <mat-icon>stop_circle_outline</mat-icon>
@@ -47,15 +52,9 @@
           <mat-icon>remove_red_eye</mat-icon>
           View
         </button>
-        <button mat-raised-button (click)="composeUp()"
-                matTooltip="Builds, (re)creates, starts, and attaches to containers for all services">
-          <mat-icon>play_circle_outline</mat-icon>
-          Up
-        </button>
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-12">
       <app-log-area></app-log-area>
