@@ -6,5 +6,7 @@ services:
     ports:
       - 4201:4200
     volumes:
-      - ./angular:/project
+      - angular:/project
       - /project/node_modules
+volumes:
+  angular:

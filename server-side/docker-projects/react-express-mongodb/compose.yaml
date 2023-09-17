@@ -7,7 +7,7 @@ services:
       - 3005:3000
     stdin_open: true
     volumes:
-      - ./frontend:/usr/src/app
+      - frontend:/usr/src/app
       - /usr/src/app/node_modules
     restart: always
     networks:
@@ -21,7 +21,7 @@ services:
       context: backend
       target: development
     volumes:
-      - ./backend:/usr/src/app
+      - backend:/usr/src/app
       - /usr/src/app/node_modules
     depends_on:
       - mongo
@@ -34,7 +34,7 @@ services:
     restart: always
     image: mongo:4.2.0
     volumes:
-      - ./data:/data/db
+      - data:/data/db
     networks:
       - express-mongo
     expose:
@@ -42,3 +42,8 @@ services:
 networks:
   react-express:
   express-mongo:
+
+volumes:
+  frontend:
+  backend:
+  data:

@@ -6,5 +6,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./vuejs:/project
+      - vuejs:/project
       - /project/node_modules
+volumes:
+  vuejs:
