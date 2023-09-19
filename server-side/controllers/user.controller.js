@@ -1,5 +1,4 @@
 import User from '../models/user.model.js';
-// TODO relazione
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import environment from '../config/environment.js';

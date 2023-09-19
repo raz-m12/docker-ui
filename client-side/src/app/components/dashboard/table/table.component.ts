@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
+  OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
 import {MatSort} from "@angular/material/sort";
@@ -21,7 +21,7 @@ import {OperationsService} from "../../../base/services/operations.service";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements AfterViewInit, OnDestroy {
+export class TableComponent implements AfterViewInit, OnDestroy, OnInit {
   // Grid variables
   displayedColumns: string[] = ['name','projectName', 'status', 'action', ];
   dataToDisplay: ProjectTableElement[] = [];
@@ -45,6 +45,13 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
+   * Load projects when initially loading the page.
+   */
+  ngOnInit(): void {
+    this.loadProjects();
+  }
+
+  /**
    * Refresh table
    */
   refresh(showNotification = true) {
@@ -54,7 +61,7 @@ export class TableComponent implements AfterViewInit, OnDestroy {
 
   private loadProjects(showNotification = true) {
     this.CS.loadProjectsWithCache(showNotification).pipe(takeUntil(this.ngUnsubscribe)).subscribe((projects: ProjectTableElement[]) => {
-      this.cd.detectChanges();
+      // this.cd.detectChanges();
       this.dataStream.data = projects;
     });
   }
@@ -75,7 +82,6 @@ export class TableComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.dataStream.paginator = this.paginator;
     this.dataStream.sort = this.sort;
-    this.loadProjects();
   }
 
   /**
