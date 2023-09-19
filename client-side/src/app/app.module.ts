@@ -11,6 +11,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AngularSvgIconModule } from 'angular-svg-icon'
 import { ToastrModule, ToastrService } from 'ngx-toastr'
 import { CommonModule } from '@angular/common'
+import {JwtModule} from "@auth0/angular-jwt";
+import {env} from "../../config/environment";
 
 @NgModule({
   declarations: [
@@ -22,6 +24,12 @@ import { CommonModule } from '@angular/common'
     HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('currentUser'),
+        allowedDomains: [env.serverEndpoint],
+      },
+    }),
     CommonModule,
     ToastrModule.forRoot({
       timeOut: 5000,

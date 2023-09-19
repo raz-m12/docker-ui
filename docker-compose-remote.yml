@@ -1,14 +1,16 @@
-version: "3.8" # specify docker-compose version
+version: "3.8"
 
-# Define the services/containers to be run
+# Define the services
 services:
   server:
+    # based on upstream image
     image: razvanfv/docker-ui:server
-    # image: "user/test:v1.0"
     container_name: docker-ui-server
     hostname: docker_compose
+    # where sample projects are located
     working_dir: /opt/docker-projects/
     ports:
+      # <host>:<container>
       - "3000:3000"
     volumes:
       - ./server-side/docker-projects:/opt/docker-projects
@@ -26,7 +28,7 @@ services:
     links:
       - database
 
-  database: # name of the third service
+  database:
     image: mongo # specify image to build container from
     container_name: docker-ui-mongo
     environment:
@@ -43,13 +45,12 @@ services:
       - "27017:27017" # specify port forewarding
 
 
-  client: # name of the first service
+  client:
     image: razvanfv/docker-ui:client
     container_name: docker-ui-client
     volumes:
-      # - ./client-side:/app/client-side
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "4200:4200" # specify port forewarding
+      - "4200:4200" # <host>:<container>
     links:
       - server
