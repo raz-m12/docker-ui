@@ -1,0 +1,272 @@
+\documentclass[a4paper]{article}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[edges]{forest}
+\usepackage{sectsty}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{graphicx}
+\definecolor{folderborder}{RGB}{110,144,169}
+\definecolor{folderbg}{rgb}{0.91, 0.84, 0.42}
+\usepackage[T1]{fontenc}    
+\usepackage[utf8]{inputenc} 
+\usepackage{floatrow}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+  folder/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+  },
+  file/.pic={%
+    \filldraw [draw=folderborder, top color=folderborder!5, bottom color=folderborder!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+  },
+}
+\forestset{%
+  declare autowrapped toks={pic me}{},
+  pic dir tree/.style={%
+    for tree={%
+      folder,
+      font=\ttfamily,
+      grow'=0,
+    },
+    before typesetting nodes={%
+      for tree={%
+        edge label+/.option={pic me},
+      },
+    },
+  },
+  pic me set/.code n args=2{%
+    \forestset{%
+      #1/.style={%
+        inner xsep=2\Size,
+        pic me={pic {#2}},
+      }
+    }
+  },
+  pic me set={directory}{folder},
+  pic me set={file}{file},
+}
+\newcommand\fname[2]{#1}
+
+\forestset{
+  arrow to next tree/.code={
+    \draw[dashed] (current bounding box.south east) -- ++(1.5em,0);
+    \draw[->](current bounding box.south east) ++(0.25em,0) -- ++(1.5em,0) -- (current bounding box.north east) -- ++(1.5em,0);
+  },
+  dots below/.style={
+    for group={#1}{
+      tempdima/.option=y,
+      for next node={
+        for ancestors={
+          TeX={%
+            \draw([xshift=\forestregister{folder indent}].parent anchor)--([xshift=\forestregister{folder indent}]\forestoption{x},\forestregister{tempdima}) node[anchor=north]{\vdots};
+          },
+        },
+      },
+    },
+  },
+  prepare fake ancestors/.style={
+    for group={#1}{
+      init prepare fake parent,
+      prepare fake ancestors',
+    },
+  },
+  prepare fake ancestors'/.style={
+    if nodewalk valid={parent}{
+      for parent={
+        prepare fake parent,
+        prepare fake ancestors',
+      },
+    }{},
+  },
+  init prepare fake parent/.style={
+    tempdima/.option=y,
+  },
+  prepare fake parent/.style={
+    y/.register=tempdima, y+=10pt,
+    coordinate, edge label={}, no edge,
+    tikz={\node at ()[anchor=south,xshift=\forestregister{folder indent}]{\vdots};},
+    typeset node,
+  },
+  draw part of tree/.style 2 args={
+    for nodewalk={#1,tempcounta/.option=id}{},
+    for nodewalk={#2,tempcountb/.option=id}{},
+    draw@part@of@tree/.process=RR{tempcounta}{tempcountb},
+  },
+  draw@part@of@tree/.style 2 args={
+    draw tree processing order/.nodewalk style={
+      id=#1,
+      ancestors,
+      fake={id=#1},
+      do until={id()==#2}{next node},
+    },
+    for root'={
+      post draw tree hook/.style={},
+      for id={#2}{
+        if nodewalk valid={next node}{
+          post draw tree hook/.append style={
+            to be continued={id=#1}{id=#2},
+          },
+        }{}
+      },
+      prepare fake ancestors={id=#1},
+      draw tree,
+    },
+  },
+  declare count register=current first node,
+  draw linear split tree/.style={
+    draw tree method/.append style={post draw tree hook},
+    begin draw/.append code={[baseline=(current bounding box.north)]},
+    draw tree stage/.style={},
+    for root'={current first node/.option=id},
+    before typesetting nodes/.process=Ow{id}{
+      draw tree stage/.append style={
+        draw part of tree={id/.register=current first node}{root',last leaf},
+      },
+    },
+  },
+  split here/.style={
+    draw tree stage/.append style/.process=ROw2{current first node}{id}{
+      draw part of tree={id=##1}{id=##2,previous node},
+    },
+    current first node/.option=id,
+  },
+}
+
+\begin{document}
+
+\begin{forest}
+  pic dir tree,
+  where level=0{}{% folder icons by default; override using file for file icons
+    directory,
+  },
+  [server-side
+    [bin
+      [
+        \fname{www.js}{start-up script}, file
+      ]
+    ],
+    [\fname{config}{Env. variables}
+      [config.js, file]
+    ],
+    [controllers
+      [container.controller.js, file]
+      [user.controller.js, file]
+    ]
+    [Dockerfile, file]
+    [\fname{docker-projects}{}]
+    [models
+      [container.model.js, file]
+      [project.model.js, file]
+      [user.model.js, file]
+    ]
+    [node\_modules]
+    [package.json, file]
+    [routes
+      [container.js, file]
+      [user.js, file]
+    ]
+    [services
+      [dockerAdapter.service.js, file]
+      [fileSystem.service.js, file]
+      [socketIO.service.js, file]
+    ]
+  ]
+\end{forest}
+
+\begin{forest}
+  pic dir tree,
+  for descendants={% folder icons by default; override using file for file icons
+    directory,
+  },
+  draw linear split tree,
+  to be continued/.style 2 args={
+    dots below={#2},
+    arrow to next tree,
+  },
+  [client-side
+    [\fname{angular.json}{}, file]
+    [config
+      [\fname{environment.ts}{}, file]
+      [\fname{environment.docker.ts}{}, file]
+    ]
+    [\fname{Dockerfile}{}, file]
+    [node\_modules
+    ]
+    [\fname{package.json}{}, file]
+    [\fname{package\_lock.json}{}, file]
+    [src
+      [\fname{app.component.ts}{}, file]
+      [\fname{app.component.html}{}, file]
+      [\fname{app.component.css}{}, file]
+      [\fname{app.module.ts}{}, file]
+      [\fname{app-routing.module.ts}{}, file]
+      [base
+        [base.module.ts, file]
+        [dashboard
+          [..., file]
+          [\fname{dashboard.module.ts}{}]
+        ]
+        [footer
+          [..., file]
+        ]
+        [guards
+          %[..., file]
+        ]
+        [models
+          %[..., file]
+        ]
+        [services
+          [\fname{operations.service.ts}{}, file]
+          [\fname{container.service.ts}{}, file]
+          [\fname{socket.service.ts}{}, file]
+          [\fname{user.service.ts}{}, file]
+        ]
+        [toolbar, split here
+          %[..., file]
+        ]
+      ]
+      [components
+        [dashboard
+          [dashboard.module.ts, file]
+          [dashboard-routing.module.ts, file]
+          [home
+            [\fname{...}{}, file]
+          ]
+          [logger
+            [\fname{...}{}, file]
+          ]
+          [management
+            [\fname{...}{}, file]
+          ]
+          [table
+            [\fname{...}{}, file]
+          ]
+          [table-dialog
+            [\fname{...}{}, file]
+          ]
+        ]
+        [user
+          [login]
+          [register]
+          [user.module.ts, file]
+          [user-routing.module.ts, file]
+        ]
+      ]
+      [assets
+        [icons
+          [\fname{...}{}, file]
+        ]
+      ]
+      [\fname{main.ts}{}, file]
+      [\fname{styles.scss}{}, file]
+    ]
+    [\fname{tsconfig.app.json}{}, file]
+    [\fname{tsconfig.json}{}, file]
+  ]
+\end{forest}
+
+
+
+\end{document}

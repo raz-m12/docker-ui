@@ -1,0 +1,11 @@
+# Fdb version 4
+["latex"] 1695062688 "aa.tex" "aa.dvi" "aa" 1695062689 2
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1689853683 40684 9b9ec0b4288972636ff6a3b9c4238efc ""
+  "/var/lib/texmf/web2c/pdftex/latex.fmt" 1693928619 6767911 c71a65a6b9c419236c2812c36aa27af3 ""
+  "aa.aux" 1695062688 32 3985256e7290058c681f74d7a3565a19 "latex"
+  "aa.tex" 1694345901 79183 a52df17e471cd8029d403b950920105c ""
+  (generated)
+  "aa.aux"
+  "aa.dvi"
+  "aa.log"
+  (rewritten before read)

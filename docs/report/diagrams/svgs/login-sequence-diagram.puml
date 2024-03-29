@@ -1,0 +1,20 @@
+@startuml
+actor User
+participant Client
+participant Server
+database Database
+
+User -> Client: Enter Credentials
+activate Client
+Client -> Server: Request Authentication
+activate Server
+Server -> Database: Query User Data
+activate Database
+Database --> Server: User Data
+deactivate Database
+Server -> Server: Verify Credentials
+Server --> Client: Authentication Result
+deactivate Server
+Client --> User: Display Result
+deactivate Client
+@enduml
