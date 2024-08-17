@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  monkeytype:
+    image: themythologist/monkeytype:frontend-latest
+    container_name: monkeytype
+    hostname: monkeytype
+    restart: unless-stopped
+    ports:
+      - 5003:5000/tcp

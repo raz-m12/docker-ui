@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  it-tools:
+    image: corentinth/it-tools
+    container_name: it-tools
+    hostname: it-tools
+    restart: no
+    ports:
+      - 8080:80/tcp

@@ -1,3 +1,22 @@
+# Installing dependencies
+1. Install mongodb
+2. Install docker
+3. Install docker-compose
+
+# Running instructions
+1. Make sure the docker deamon is up and running
+> sudo systemctl start docker
+
+1. Open a terminal in the same directory of the project and write
+> sudo ./run-local
+
+
+
+# Todo
+- identifica diversi tipi di utenti (specifico ma non troppo - caratteristiche del gruppo)
+- identificare media e varianza per ogni gruppo di utenti
+- check usability tests
+
 # Descrizione del progetto
 
 Si vuole realizzare un'applicazione che gestisca dei container Docker attraverso un'interfaccia grafica.
