@@ -1,2 +1,4 @@
 mongo/db
 node_modules
+mongo.config
+docs/report
