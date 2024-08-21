@@ -27,6 +27,9 @@ Launch the docker daemon then clone and launch the application.
 ```
 
 # Development
+
+Below are some of the artefacts that were created during the requirements engineering phase of the project. 
+
 ## Personas and User stories
 <table>
     <thead>
